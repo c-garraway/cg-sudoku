@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Section from "./Section";
 import { Box } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { selectPuzzleValues, selectSection1, selectSection2, selectSection3, selectSection4, selectSection5, selectSection6, selectSection7, selectSection8, selectSection9 } from "../../features/gameData/gameDataSlice";
-import { updateHorizontalErrors } from "../../features/gameData/gameErrorsSlice";
+import { useSelector } from "react-redux";
+import { selectSection1, selectSection2, selectSection3, selectSection4, selectSection5, selectSection6, selectSection7, selectSection8, selectSection9 } from "../../features/gameData/gameDataSlice";
 
 function Puzzle() {
-    const dispatch = useDispatch();
     const valuesSection1 = useSelector(selectSection1)
     const valuesSection2 = useSelector(selectSection2)
     const valuesSection3 = useSelector(selectSection3)
@@ -16,42 +14,6 @@ function Puzzle() {
     const valuesSection7 = useSelector(selectSection7)
     const valuesSection8 = useSelector(selectSection8)
     const valuesSection9 = useSelector(selectSection9)
-    const puzzleValues = useSelector(selectPuzzleValues)
-    const [horizontalDuplicate, setHorizontalDuplicate] = useState([])
-
-    function hasHorizontalDuplicateValue(array) {
-        let errors = []
-        for (let x = 0; x < array.length; x++) {
-            let innerArray = array[x]
-            let errorValues = []
-            for (let i = 0; i < innerArray.length; i++) {
-                if(errorValues.includes(innerArray[i])) {
-                    continue;
-                }
-                if (innerArray.indexOf(innerArray[i]) !== innerArray.lastIndexOf(innerArray[i])) {
-                    errors.push([x, innerArray[i]])
-                    errorValues.push(innerArray[i])
-                }
-            }
-        }
-        if(errors.length > 0) {
-            return(errors);
-        } else { return null}
-    }
-
-    if(horizontalDuplicate.length > 0) {
-        //console.log(horizontalDuplicate)
-        dispatch(updateHorizontalErrors(horizontalDuplicate))
-    } 
-
-    useEffect(()=> {
-        const checkHDupes = hasHorizontalDuplicateValue(puzzleValues)
-        if(checkHDupes) {
-            setHorizontalDuplicate(checkHDupes)
-        } 
-        
-    },[puzzleValues])
-    
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', border: '2px solid black', width: 'fit-content', mb: 10}}>

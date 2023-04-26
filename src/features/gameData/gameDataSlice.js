@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const values = [
+/* const values = [
     [1, 2, 3, 4, 5, 6, 7, 8, 9], 
     [4, 5, 6, 7, 8, 9, 1, 2, 3], 
     [7, 8, 9, 1, 2, 3, 4, 5, 6],
@@ -10,11 +10,35 @@ const values = [
     [3, 4, 5, 6, 7, 8, 9, 1, 2],
     [6, 7, 8, 9, 1, 2, 3, 4, 5],
     [9, 1, 2, 3, 4, 5, 6, 7, 8],
+] */
+
+/* const values2 = [
+    [null, null, null, 4, 5, 6, 7, 8, 9], 
+    [null, null, null, 7, 8, 9, 1, 2, 3], 
+    [null, null, null, 1, 2, 3, 4, 5, 6],
+    [2, 3, 4, 5, 6, 7, 8, 9, 1],
+    [5, 6, 7, 8, 9, 1, 2, 3, 4],
+    [8, 9, 1, 2, 3, 4, 5, 6, 7],
+    [3, 4, 5, 6, 7, 8, 9, 1, 2],
+    [6, 7, 8, 9, 1, 2, 3, 4, 5],
+    [9, 1, 2, 3, 4, 5, 6, 7, 8],
+] */
+
+const values3 = [
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
+    [null, null, null, null, null, null, null, null, null], 
 ]
 
 const initialState = () => {
     return {
-        puzzleValues: values,
+        puzzleValues: values3,
         keypadValue: 1,
         selectedCell: null
     }
@@ -32,7 +56,11 @@ const gameDataSlice = createSlice({
             state.keypadValue = action.payload
         },
         updatePuzzleCell: (state, action) => {
-            state.puzzleValues[action.payload.row][action.payload.column] = state.keypadValue
+            if(state.puzzleValues[action.payload.row][action.payload.column] === state.keypadValue) {
+                state.puzzleValues[action.payload.row][action.payload.column] = null
+            } else {
+                state.puzzleValues[action.payload.row][action.payload.column] = state.keypadValue
+            }
         }
     }
 });
