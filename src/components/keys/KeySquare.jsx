@@ -30,7 +30,7 @@ KeySquare.propTypes = {
 }
 
 KeySquare.defaultProps = {
-    value: '',
+    value: null,
 }
 
 export default KeySquare;

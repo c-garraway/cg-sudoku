@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import gameDataReducer from '../features/gameData/gameDataSlice'
-import gameErrorsReducer from '../features/gameData/gameErrorsSlice';
+import gameMovesReducer from '../features/gameData/gameMovesSlice';
 
 export const store = configureStore({
   reducer: {
     gameData: gameDataReducer,
-    gameErrors: gameErrorsReducer
+    gameMoves: gameMovesReducer
   },
 });

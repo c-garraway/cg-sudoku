@@ -56,16 +56,21 @@ const gameDataSlice = createSlice({
             state.keypadValue = action.payload
         },
         updatePuzzleCell: (state, action) => {
-            if(state.puzzleValues[action.payload.row][action.payload.column] === state.keypadValue) {
+            if(!action.payload) {return}
+            if(state.puzzleValues[action.payload.row][action.payload.column] === action.payload.updatedValue) {
                 state.puzzleValues[action.payload.row][action.payload.column] = null
             } else {
-                state.puzzleValues[action.payload.row][action.payload.column] = state.keypadValue
+                state.puzzleValues[action.payload.row][action.payload.column] = action.payload.updatedValue
             }
+        },
+        restorePuzzleCell: (state, action) => {
+            if(!action.payload) {return}
+            state.puzzleValues[action.payload.row][action.payload.column] = action.payload.previousValue
         }
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell} = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell} = gameDataSlice.actions;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
 export const selectKeypadValue = (state) => state.gameData.keypadValue;
 export const selectSelectedCell = (state) => state.gameData.selectedCell;
