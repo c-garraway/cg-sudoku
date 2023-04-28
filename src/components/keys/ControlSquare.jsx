@@ -1,15 +1,14 @@
 import { Box } from "@mui/material";
 import PropTypes from 'prop-types'
-import { resetGameData, restorePuzzleCell } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, resetGameData, restorePuzzleCell } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLastGameMove, resetGameMoves, selectHasMoves, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
+import { generateSudoku } from "../../helpers/generatePuzzle";
 
 function ControlSquare({value}) {
     const dispatch = useDispatch();
     const lastGameMove = useSelector(selectLastGameMove)
     const hasMoves = useSelector(selectHasMoves)
-    //const disabled = hasMoves ? 'flex' : 'none'
-    //console.log(lastGameMove)
 
     function handleSelect() {
         if(value === 'Reset') {
@@ -19,6 +18,9 @@ function ControlSquare({value}) {
         if(value === '<' && hasMoves) {
             dispatch(restorePuzzleCell(lastGameMove))
             dispatch(deleteLastGameMove())
+        }
+        if(value === 'New') {
+            dispatch(loadPuzzleValues(generateSudoku()))
         }
     }
 

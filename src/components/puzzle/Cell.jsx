@@ -3,8 +3,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
 import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell } from "../../features/gameData/gameDataSlice";
-import { hasHorizontalDuplicateValue, hasVerticalDuplicateValue, hasSectionDuplicateValue } from "../../helpers/duplicateErrors";
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
+import { checkDuplicate } from "../../helpers/duplicateErrors";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -29,33 +29,15 @@ function Cell({value, sectionValues, section, row, column}) {
     }),[puzzleRow, puzzleColumn, value, updatedValue, section, hasError]) 
 
     useEffect(()=> {
-        const horizontalErrors = hasHorizontalDuplicateValue(puzzleValues)
-        const verticalErrors = hasVerticalDuplicateValue(puzzleValues)
-        const sectionErrors = hasSectionDuplicateValue(sectionValues)
-
         async function checkForErrors() {
-            
-            if ( value !== null && (horizontalErrors || verticalErrors || sectionErrors)) {
-                checkErrorType(horizontalErrors, cellInfo.row);
-                checkErrorType(verticalErrors, cellInfo.column);
-                checkErrorType(sectionErrors);
-            }
-            else {
+            const isDuplicate = checkDuplicate(puzzleValues, sectionValues, cellInfo.row, cellInfo.column, cellInfo.previousValue)
+            if(isDuplicate) {
+                setHasError(true);
+            } else {
                 setHasError(false);
             }
         }
-        
-        function checkErrorType(errors, index) {
-            if (errors) {
-                errors.forEach((item) => {
-                    if ((item[0] === index && item[1] === value) || (!index && item === value)) {
-                        if (!hasError) {
-                            setHasError(true);
-                        }
-                    }
-                });
-            } 
-        }
+
         checkForErrors().then(()=> {
             if(hasError) {
                 setSelectedColor('lightpink')}

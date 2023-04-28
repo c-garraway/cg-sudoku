@@ -24,7 +24,7 @@ import { createSlice } from "@reduxjs/toolkit";
     [9, 1, 2, 3, 4, 5, 6, 7, 8],
 ] */
 
-const values3 = [
+/* const values3 = [
     [null, null, null, null, null, null, null, null, null], 
     [null, null, null, null, null, null, null, null, null], 
     [null, null, null, null, null, null, null, null, null], 
@@ -34,11 +34,19 @@ const values3 = [
     [null, null, null, null, null, null, null, null, null], 
     [null, null, null, null, null, null, null, null, null], 
     [null, null, null, null, null, null, null, null, null], 
-]
+] */
+
+let arr = new Array(9);
+for (let i = 0; i < arr.length; i++) {
+    arr[i] = new Array(9);
+    for (let j = 0; j < arr[i].length; j++) {
+        arr[i][j] = null;
+    }
+}
 
 const initialState = () => {
     return {
-        puzzleValues: values3,
+        puzzleValues: arr,
         keypadValue: 1,
         selectedCell: null
     }
@@ -49,6 +57,9 @@ const gameDataSlice = createSlice({
     initialState: initialState(),
     reducers: {
         resetGameData: () => initialState(),
+        loadPuzzleValues: (state, action) => {
+            state.puzzleValues = action.payload
+        },
         updateSelectedCell: (state, action) => {
             state.selectedCell = action.payload
         },
@@ -70,7 +81,7 @@ const gameDataSlice = createSlice({
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell} = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues} = gameDataSlice.actions;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
 export const selectKeypadValue = (state) => state.gameData.keypadValue;
 export const selectSelectedCell = (state) => state.gameData.selectedCell;
