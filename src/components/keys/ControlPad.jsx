@@ -9,6 +9,7 @@ function ControlPad() {
             <ControlSquare value={'Reset'} />
             <ControlSquare value={'New'} />
             <ControlSquare value={'Level'} />
+            <ControlSquare value={'Resolve'} />
         </Box>
     );
 }

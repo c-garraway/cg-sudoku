@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
 import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell } from "../../features/gameData/gameDataSlice";
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
-import { checkDuplicate } from "../../helpers/duplicateErrors";
+import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -38,14 +38,23 @@ function Cell({value, sectionValues, section, row, column}) {
             }
         }
 
+        if(value === currentKeypadValue) {
+            setSelectedColor('MediumAquaMarine')
+        } else {
+            setSelectedColor('white')
+        }
+
+        if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
+            setSelectedFontColor('crimson')
+        } else {
+            setSelectedFontColor('black')
+        }
+
         checkForErrors().then(()=> {
             if(hasError) {
-                setSelectedColor('lightpink')}
-        }) 
-
-        if(cellInfo?.row !== currentSelectedCell?.row || cellInfo?.column !== currentSelectedCell?.column || value === null)  {setSelectedColor('white')}
-        if(value === currentKeypadValue) {setSelectedColor('lightblue')} else {setSelectedColor('white')}
-        if(currentSelectedCell === cellInfo) {setSelectedFontColor('blue')} else {setSelectedFontColor('black')}
+                setSelectedColor('lightpink')
+            }
+        })
 
     },[currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues ])
 

@@ -1,41 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-/* const values = [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9], 
-    [4, 5, 6, 7, 8, 9, 1, 2, 3], 
-    [7, 8, 9, 1, 2, 3, 4, 5, 6],
-    [2, 3, 4, 5, 6, 7, 8, 9, 1],
-    [5, 6, 7, 8, 9, 1, 2, 3, 4],
-    [8, 9, 1, 2, 3, 4, 5, 6, 7],
-    [3, 4, 5, 6, 7, 8, 9, 1, 2],
-    [6, 7, 8, 9, 1, 2, 3, 4, 5],
-    [9, 1, 2, 3, 4, 5, 6, 7, 8],
-] */
-
-/* const values2 = [
-    [null, null, null, 4, 5, 6, 7, 8, 9], 
-    [null, null, null, 7, 8, 9, 1, 2, 3], 
-    [null, null, null, 1, 2, 3, 4, 5, 6],
-    [2, 3, 4, 5, 6, 7, 8, 9, 1],
-    [5, 6, 7, 8, 9, 1, 2, 3, 4],
-    [8, 9, 1, 2, 3, 4, 5, 6, 7],
-    [3, 4, 5, 6, 7, 8, 9, 1, 2],
-    [6, 7, 8, 9, 1, 2, 3, 4, 5],
-    [9, 1, 2, 3, 4, 5, 6, 7, 8],
-] */
-
-/* const values3 = [
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-    [null, null, null, null, null, null, null, null, null], 
-] */
-
 let arr = new Array(9);
 for (let i = 0; i < arr.length; i++) {
     arr[i] = new Array(9);

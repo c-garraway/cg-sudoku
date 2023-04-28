@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, resetGameData, restorePuzzleCell } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, resetGameData, restorePuzzleCell, updateSelectedCell } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLastGameMove, resetGameMoves, selectHasMoves, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import { generateSudoku } from "../../helpers/generatePuzzle";
+import { addPuzzleMask } from "../../helpers/addPuzzleMask";
 
 function ControlSquare({value}) {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ function ControlSquare({value}) {
     const hasMoves = useSelector(selectHasMoves)
 
     function handleSelect() {
+        dispatch(updateSelectedCell(null))
         if(value === 'Reset') {
             dispatch(resetGameData())
             dispatch(resetGameMoves())
@@ -20,7 +22,7 @@ function ControlSquare({value}) {
             dispatch(deleteLastGameMove())
         }
         if(value === 'New') {
-            dispatch(loadPuzzleValues(generateSudoku()))
+            dispatch(loadPuzzleValues(addPuzzleMask(generateSudoku(), 2)))
         }
     }
 

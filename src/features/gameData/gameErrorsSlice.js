@@ -3,9 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = () => {
     return {
-        horizontalErrors: [],
-        verticalErrors: [],
-        sectionErrors: []
+        cellErrors: [],
     }
 };
 

@@ -10,7 +10,7 @@ function KeySquare({value}) {
     const [selectedColor, setSelectedColor] = useState('white')
 
     useEffect(()=> {
-        if(value !== currentKeypadValue) {setSelectedColor('white')} else {setSelectedColor('lightblue')}
+        if(value !== currentKeypadValue) {setSelectedColor('white')} else {setSelectedColor('MediumAquaMarine')}
     },[value, currentKeypadValue])
 
     function handleSelect() {
