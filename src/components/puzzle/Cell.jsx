@@ -2,9 +2,10 @@ import { Box } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus } from "../../features/gameData/gameDataSlice";
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
+//import { checkPuzzleComplete } from "../../helpers/checkPuzzleStatus";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -28,7 +29,9 @@ function Cell({value, sectionValues, section, row, column}) {
         hasError: hasError
     }),[puzzleRow, puzzleColumn, value, updatedValue, section, hasError]) 
 
+
     useEffect(()=> {
+        
         async function checkForErrors() {
             const isDuplicate = checkDuplicate(puzzleValues, sectionValues, cellInfo.row, cellInfo.column, cellInfo.previousValue)
             if(isDuplicate) {
@@ -45,7 +48,8 @@ function Cell({value, sectionValues, section, row, column}) {
         }
 
         if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
-            setSelectedFontColor('crimson')
+            //checkPuzzleComplete(puzzleValues)
+            setSelectedFontColor('blue')
         } else {
             setSelectedFontColor('black')
         }
@@ -56,12 +60,16 @@ function Cell({value, sectionValues, section, row, column}) {
             }
         })
 
+
+
     },[currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues ])
 
     function handleSelectedCell() {
         dispatch(updatePuzzleCell(cellInfo))
         dispatch(updateSelectedCell(cellInfo))
         dispatch(addGameMove(cellInfo))
+        dispatch(updatePuzzleStatus())
+        dispatch(updateCompleteStatus())
         setHasError(false)
     }
 

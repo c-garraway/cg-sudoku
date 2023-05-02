@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, resetGameData, restorePuzzleCell, updateSelectedCell } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, restorePuzzleCell, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, selectResolvedPuzzle, selectOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLastGameMove, resetGameMoves, selectHasMoves, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import { generateSudoku } from "../../helpers/generatePuzzle";
@@ -10,20 +10,31 @@ function ControlSquare({value}) {
     const dispatch = useDispatch();
     const lastGameMove = useSelector(selectLastGameMove)
     const hasMoves = useSelector(selectHasMoves)
+    const resolvedPuzzle = useSelector(selectResolvedPuzzle)
+    const originalPuzzle = useSelector(selectOriginalPuzzle)
 
     function handleSelect() {
         dispatch(updateSelectedCell(null))
         if(value === 'Reset') {
-            dispatch(resetGameData())
             dispatch(resetGameMoves())
+            dispatch(loadPuzzleValues(originalPuzzle))
         }
         if(value === '<' && hasMoves) {
             dispatch(restorePuzzleCell(lastGameMove))
             dispatch(deleteLastGameMove())
         }
         if(value === 'New') {
-            dispatch(loadPuzzleValues(addPuzzleMask(generateSudoku(), 2)))
+            let puzzleValues = generateSudoku()
+            dispatch(loadResolvedPuzzle(puzzleValues))
+            let puzzleMaskValues = addPuzzleMask(puzzleValues, 0)
+            dispatch(loadOriginalPuzzle(puzzleMaskValues))
+            dispatch(loadPuzzleValues(puzzleMaskValues));
         }
+        if(value === 'Resolve') {
+            dispatch(loadPuzzleValues(resolvedPuzzle))
+        }
+        dispatch(updatePuzzleStatus())
+        dispatch(updateCompleteStatus())
     }
 
     return (
@@ -33,6 +44,7 @@ function ControlSquare({value}) {
         >{value}</Box>
     );
 }
+
 
 ControlSquare.propTypes = {
     value: PropTypes.string,
