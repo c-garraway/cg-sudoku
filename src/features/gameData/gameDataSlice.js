@@ -23,8 +23,8 @@ const status = {
 
 const initialState = () => {
     return {
-        resolvedPuzzle: null,
-        originalPuzzle: null,
+        resolvedPuzzle: arr,
+        originalPuzzle: arr,
         puzzleValues: arr,
         puzzleStatus: status,
         puzzleComplete: false,

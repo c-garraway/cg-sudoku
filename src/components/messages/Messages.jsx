@@ -7,16 +7,17 @@ function Messages() {
     const puzzleComplete = useSelector(selectPuzzleComplete)
     const [message, setMessage] = useState('')
 
+
     useEffect(()=> {
         if(puzzleComplete) {
             setMessage('The puzzle has been successfully completed!')
         } else {
-            setMessage('Sudoku')
+            setMessage('Welcome, to start select new puzzle below.')
         }
     }, [puzzleComplete])
 
     return (
-        <Box sx={{mb: 1, fontSize: 18, fontWeight: 'bold', color: 'crimson'}}>{message}</Box>
+        <Box sx={{mt: 2, mb: 2, fontSize: 18, color: 'crimson'}}>{message}</Box>
     );
 }
 

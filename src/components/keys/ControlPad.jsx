@@ -1,16 +1,21 @@
 import React from "react";
 import ControlSquare from './ControlSquare'
-import SelectSquare from './SelectSquare'
+//import SelectSquare from './SelectSquare'
+import LevelSelect from "./LevelSelector";
 import { Box } from "@mui/material";
 
 function ControlPad() {
     return (
-        <Box sx={{display: "flex", border: '2px solid black', mt: 1, /* alignItems: 'start' */}}>
-            <ControlSquare value={'<'} />
-            <ControlSquare value={'Reset'} />
-            <ControlSquare value={'New'} />
-            <SelectSquare value={'Level'} />
-            <ControlSquare value={'Resolve'} />
+        <Box sx={{width: '100%'}}>
+            <Box sx={{display: "flex", justifyContent: 'space-between'}}>
+                <ControlSquare value={'<'} />
+                <ControlSquare value={'Re-Start'} />
+                <ControlSquare value={'Solve'} />
+            </Box>
+            <Box sx={{display: "flex", justifyContent: 'center', mt: 1}}>
+                <ControlSquare value={'New Puzzle'} />
+                <LevelSelect />
+            </Box>
         </Box>
     );
 }

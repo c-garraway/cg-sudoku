@@ -53,11 +53,11 @@ function LevelSelect() {
         <Box>
             <TextField
                 select
-                variant="filled"
-                label="Difficulty"
+                variant="outlined"
+                label="DIFFICULTY"
                 size="small"
-                defaultValue=''
-                sx={{width: '120px', margin: 1}}
+                defaultValue={0}
+                sx={{width: '150px', mt: 1, ml: 1}}
                 onChange={(e) => {dispatch(updateSelectedLevel(e.target.value))}}
                 >
                 {difficulties.map((option, index) => (

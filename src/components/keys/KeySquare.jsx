@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +10,10 @@ function KeySquare({value}) {
     const [selectedColor, setSelectedColor] = useState('white')
     const puzzleStatus = useSelector(selectPuzzleStatus)
     const [fontColor, setFontColor] = useState('black')
+    const selected = value === currentKeypadValue ? true : false
 
     useEffect(()=> {
-        if(value !== currentKeypadValue) {setSelectedColor('white')} else {setSelectedColor('MediumAquaMarine')}
+        if(selected) {setSelectedColor('MediumAquaMarine')} else {setSelectedColor('white')}
 
         if(puzzleStatus[value] === 9) { // ADD: selected cell hasError = false
             setFontColor('crimson')
@@ -20,17 +21,19 @@ function KeySquare({value}) {
             setFontColor('black')
         }
 
-    },[value, currentKeypadValue, puzzleStatus])
+    },[value, currentKeypadValue, puzzleStatus, selected])
 
     function handleSelect() {
         dispatch(updateKeypadValue(value))
     }
 
     return (
-        <Box 
-            sx={{display: 'flex', alignContent: 'center', justifyContent: 'center', backgroundColor: selectedColor, width: '40px', height: '40px', alignItems: 'center', cursor: 'pointer', fontWeight: 'bold', fontSize: 'large', border: '1px solid black', color: fontColor}}
+        <Button 
+            sx={{display: 'flex', backgroundColor: selectedColor, fontWeight: 'bold', fontSize: 'large', border: '1px solid black', color: fontColor, mt: 1, p: 0}}
             onClick={handleSelect}
-        >{value}</Box>
+            size="small"
+            variant="contained"
+        >{value}</Button>
     );
 }
 

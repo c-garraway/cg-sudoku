@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
 import { loadPuzzleValues, restorePuzzleCell, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, selectResolvedPuzzle, selectOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, selectSelectedLevel } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ function ControlSquare({value}) {
 
     function handleSelect() {
         dispatch(updateSelectedCell(null))
-        if(value === 'Reset') {
+        if(value === 'Re-Start') {
             dispatch(resetGameMoves())
             dispatch(loadPuzzleValues(originalPuzzle))
         }
@@ -24,14 +24,14 @@ function ControlSquare({value}) {
             dispatch(restorePuzzleCell(lastGameMove))
             dispatch(deleteLastGameMove())
         }
-        if(value === 'New') {
+        if(value === 'New Puzzle') {
             let puzzleValues = generateSudoku()
             dispatch(loadResolvedPuzzle(puzzleValues))
             let puzzleMaskValues = addPuzzleMask(puzzleValues, selectedLevel)
             dispatch(loadOriginalPuzzle(puzzleMaskValues))
             dispatch(loadPuzzleValues(puzzleMaskValues));
         }
-        if(value === 'Resolve') {
+        if(value === 'Solve') {
             dispatch(loadPuzzleValues(resolvedPuzzle))
         }
         dispatch(updatePuzzleStatus())
@@ -39,10 +39,10 @@ function ControlSquare({value}) {
     }
 
     return (
-        <Box 
-            sx={{display: 'flex', alignContent: 'center', justifyContent: 'center', /* backgroundColor: selectedColor, */ width: '80px', height: '40px', alignItems: 'center', cursor: 'pointer', /* fontWeight: 'bold', */ fontSize: 'large', border: '1px solid black'}}
+        <Button 
+            sx={{display: 'flex', width: '30%', cursor: 'pointer', border: '1px solid black', mt: 1, color: 'black'}}
             onClick={handleSelect}
-        >{value}</Box>
+        >{value}</Button>
     );
 }
 
