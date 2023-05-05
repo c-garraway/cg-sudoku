@@ -1,6 +1,6 @@
 export function addPuzzleMask(puzzle, level) {
     const levelRange = [
-        { min: 3, max: 4 },
+        { min: 2, max: 4 },
         { min: 3, max: 6 },
         { min: 4, max: 7 },
     ];

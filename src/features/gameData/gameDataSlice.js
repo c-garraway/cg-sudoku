@@ -29,7 +29,8 @@ const initialState = () => {
         puzzleStatus: status,
         puzzleComplete: false,
         keypadValue: 1,
-        selectedCell: null
+        selectedCell: null,
+        selectedLevel: 0
     }
 };
 
@@ -72,11 +73,14 @@ const gameDataSlice = createSlice({
         updateCompleteStatus: (state) => {
             const complete = checkComplete(state.puzzleStatus)
             state.puzzleComplete = complete
+        },
+        updateSelectedLevel: (state, action) => {
+            state.selectedLevel = action.payload
         }
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus} = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel} = gameDataSlice.actions;
 export const selectResolvedPuzzle = (state) => state.gameData.resolvedPuzzle;
 export const selectOriginalPuzzle = (state) => state.gameData.originalPuzzle;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
@@ -84,6 +88,7 @@ export const selectPuzzleStatus = (state) => state.gameData.puzzleStatus;
 export const selectPuzzleComplete = (state) => state.gameData.puzzleComplete;
 export const selectKeypadValue = (state) => state.gameData.keypadValue;
 export const selectSelectedCell = (state) => state.gameData.selectedCell;
+export const selectSelectedLevel = (state) => state.gameData.selectedLevel;
 export const selectSection1 = (state) => {const values = state.gameData.puzzleValues
     return [
         [values[0][0], values[0][1], values[0][2]], 
