@@ -56,6 +56,7 @@ function LevelSelect() {
                 variant="outlined"
                 label="DIFFICULTY"
                 size="small"
+                color="secondary"
                 defaultValue={0}
                 sx={{width: '150px', mt: 1, ml: 1}}
                 onChange={(e) => {dispatch(updateSelectedLevel(e.target.value))}}

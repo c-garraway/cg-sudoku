@@ -1,6 +1,5 @@
 import React from "react";
 import ControlSquare from './ControlSquare'
-//import SelectSquare from './SelectSquare'
 import LevelSelect from "./LevelSelector";
 import { Box } from "@mui/material";
 

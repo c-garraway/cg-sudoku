@@ -32,7 +32,7 @@ function Cell({value, sectionValues, section, row, column}) {
         canEdit: canEdit
     }),[puzzleRow, puzzleColumn, value, updatedValue, section, hasError, canEdit]) 
 
-    console.log(cellInfo)
+    //console.log(cellInfo)
 
     useEffect(()=> {
         if(originalPuzzle[cellInfo.row][cellInfo.column] === null) {
