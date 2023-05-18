@@ -9,10 +9,10 @@ import { theme } from './theme/theme'
 function App() {
     return (
         <ThemeProvider theme={theme}>
-            <Box className="App" sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', mt: 10, width: 'fit-content', margin: '0 auto'}}>
+            <Box /* className="App" */ sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', /* mt: 10,  */width: 'fit-content', margin: '10px auto'}} >
                 <Typography
                     variant='h3'
-                    sx={{color: 'crimson'}}
+                    sx={{color: 'crimson', fontFamily: 'Bebas Neue', letterSpacing: '5px'}}
                 >CG Sudoku</Typography>
                 <Puzzle />
                 <Messages />

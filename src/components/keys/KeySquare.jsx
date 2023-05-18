@@ -3,22 +3,23 @@ import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
 import { selectKeypadValue, selectPuzzleStatus, updateKeypadValue } from "../../features/gameData/gameDataSlice";
+import { theme } from "../../theme/theme";
 
 function KeySquare({value}) {
     const dispatch = useDispatch();
     const currentKeypadValue = useSelector(selectKeypadValue)
-    const [selectedColor, setSelectedColor] = useState('white')
+    const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
     const puzzleStatus = useSelector(selectPuzzleStatus)
-    const [fontColor, setFontColor] = useState('black')
+    const [fontColor, setFontColor] = useState(theme.palette.keyFont.standard)
     const selected = value === currentKeypadValue ? true : false
 
     useEffect(()=> {
-        if(selected) {setSelectedColor('MediumAquaMarine')} else {setSelectedColor('white')}
+        if(selected) {setSelectedColor(theme.palette.cell.selected)} else {setSelectedColor(theme.palette.cell.standard)}
 
         if(puzzleStatus[value] === 9) { // ADD: selected cell hasError = false
-            setFontColor('crimson')
+            setFontColor(theme.palette.keyFont.completed)
         } else {
-            setFontColor('black')
+            setFontColor(theme.palette.keyFont.standard)
         }
 
     },[value, currentKeypadValue, puzzleStatus, selected])
@@ -33,7 +34,9 @@ function KeySquare({value}) {
             onClick={handleSelect}
             size="small"
             variant="contained"
-        >{value}</Button>
+            color="cell"
+            >{value}
+        </Button>
     );
 }
 

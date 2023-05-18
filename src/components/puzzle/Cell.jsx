@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle } from "../../features/gameData/gameDataSlice";
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
+import { theme } from "../../theme/theme";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -13,11 +14,11 @@ function Cell({value, sectionValues, section, row, column}) {
     const puzzleValues = useSelector(selectPuzzleValues)
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
-    const [selectedColor, setSelectedColor] = useState('white')
-    const [selectedFontColor, setSelectedFontColor] = useState('black')
+    const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
+    const [selectedFontColor, setSelectedFontColor] = useState(theme.palette.cellFont.standard)
     const [hasError, setHasError] = useState(false)
     const [canEdit, setCanEdit] = useState()
-    const selectedFontWeight = canEdit ? '300' : 'bold'
+    const selectedFontWeight = canEdit ? '300' : '700'
 
     const puzzleRow = section <=3 ? row : section <=6 ? row + 3 : section <=9 ? row + 6 : ''
     const puzzleColumn = (section === 1 || section === 4 || section === 7) ? column : (section === 2 || section === 5 || section === 8) ? column + 3 : (section === 3 || section === 6 || section === 9) ? column + 6 : ''
@@ -50,21 +51,21 @@ function Cell({value, sectionValues, section, row, column}) {
         }
 
         if(value === currentKeypadValue) {
-            setSelectedColor('MediumAquaMarine')
+            setSelectedColor(theme.palette.cell.selected)
         } else {
-            setSelectedColor('white')
+            setSelectedColor(theme.palette.cell.standard)
         }
 
         if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
             //checkPuzzleComplete(puzzleValues)
-            setSelectedFontColor('blue')
+            setSelectedFontColor(theme.palette.cellFont.selected)
         } else {
-            setSelectedFontColor('black')
+            setSelectedFontColor(theme.palette.cellFont.standard)
         }
 
         checkForErrors().then(()=> {
             if(hasError) {
-                setSelectedColor('lightpink')
+                setSelectedColor(theme.palette.cell.error)
             }
         })
 

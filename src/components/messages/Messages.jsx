@@ -12,7 +12,7 @@ function Messages() {
         if(puzzleComplete) {
             setMessage('The puzzle has been successfully completed!')
         } else {
-            setMessage('Welcome, to start select new puzzle below.')
+            setMessage('To start a new game select [new puzzle] below.')
         }
     }, [puzzleComplete])
 

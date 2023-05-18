@@ -47,7 +47,7 @@ import { updateSelectedLevel } from '../../features/gameData/gameDataSlice';
 
 function LevelSelect() {
     const dispatch = useDispatch();
-    const difficulties = ['easy', 'medium', 'hard']
+    const difficulties = ['EASY', 'MEDIUM', 'HARD']
 
     return (
         <Box>
