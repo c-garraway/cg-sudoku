@@ -6,6 +6,7 @@ import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzle
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
+import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function Cell({value, sectionValues, section, row, column}) {
     const puzzleValues = useSelector(selectPuzzleValues)
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
+    const puzzleComplete =  useSelector(selectPuzzleComplete)
     const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
     const [selectedFontColor, setSelectedFontColor] = useState(theme.palette.cellFont.standard)
     const [hasError, setHasError] = useState(false)
@@ -54,6 +56,10 @@ function Cell({value, sectionValues, section, row, column}) {
             setSelectedColor(theme.palette.cell.selected)
         } else {
             setSelectedColor(theme.palette.cell.standard)
+        }
+
+        if(puzzleComplete) {
+            setSelectedColor(theme.palette.cell.complete)
         }
 
         if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {

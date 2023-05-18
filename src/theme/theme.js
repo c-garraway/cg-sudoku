@@ -7,7 +7,7 @@ export const theme = createTheme({
         primary: { main: '#1565c0' },
         secondary: { main: '#673ab7' },
         cellFont: { standard: 'black', selected: 'chocolate'},
-        cell: { standard: 'white', selected: 'PowderBlue', error: 'PeachPuff'},
+        cell: { standard: 'white', selected: 'PowderBlue', error: 'PeachPuff', complete: 'MediumAquaMarine'},
         keyFont: { standard: 'black', completed: 'RoyalBlue'},
     },
 });
