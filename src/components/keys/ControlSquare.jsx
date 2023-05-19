@@ -40,7 +40,7 @@ function ControlSquare({value}) {
 
     return (
         <Button 
-            sx={{display: 'flex', width: '30%', cursor: 'pointer', border: '1px solid black', mt: 1, color: 'black'}}
+            sx={{display: 'flex', width: '32%', cursor: 'pointer', border: '1px solid black', mt: 1, color: 'black'}}
             onClick={handleSelect}
         >{value}</Button>
     );

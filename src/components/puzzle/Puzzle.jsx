@@ -16,7 +16,7 @@ function Puzzle() {
     const valuesSection9 = useSelector(selectSection9)
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', border: '2px solid black', width: 'fit-content', mb: 1, mt: 1}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', border: '2px solid black', width: 'fit-content', mt: 1}}>
             <Box sx={{display: 'flex'}}>
                 <Section 
                     values={valuesSection1}

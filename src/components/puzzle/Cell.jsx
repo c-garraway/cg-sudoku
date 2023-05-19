@@ -75,7 +75,7 @@ function Cell({value, sectionValues, section, row, column}) {
             }
         })
 
-    },[currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues, originalPuzzle ])
+    },[currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues, originalPuzzle, puzzleComplete ])
 
     function handleSelectedCell() {
         if(cellInfo.canEdit){
