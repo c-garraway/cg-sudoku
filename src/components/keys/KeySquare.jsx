@@ -30,7 +30,7 @@ function KeySquare({value}) {
 
     return (
         <Button 
-            sx={{display: 'flex', backgroundColor: selectedColor, fontWeight: 'bold', fontSize: 'large', border: '1px solid black', color: fontColor, mt: 1, p: 0}}
+            sx={{display: 'flex', backgroundColor: selectedColor, fontWeight: 'bold', fontSize: 'large', border: '1px solid black', color: fontColor, mt: 1, p: 0, height: 50}}
             onClick={handleSelect}
             size="small"
             variant="contained"

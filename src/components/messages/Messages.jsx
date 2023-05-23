@@ -17,7 +17,7 @@ function Messages() {
     }, [puzzleComplete])
 
     return (
-        <Box sx={{mt: 2, mb: 2, fontSize: 18, color: 'crimson'}}>{message}</Box>
+        <Box sx={{mt: 2, mb: 1, fontSize: 18, color: 'crimson'}}>{message}</Box>
     );
 }
 
