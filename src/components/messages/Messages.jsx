@@ -1,23 +1,24 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
+import { selectMessageBox, updateMessageBox } from "../../features/gameData/gameMessageSlice";
 
 function Messages() {
+    const dispatch = useDispatch()
     const puzzleComplete = useSelector(selectPuzzleComplete)
-    const [message, setMessage] = useState('')
-
+    const messageBox = useSelector(selectMessageBox)
 
     useEffect(()=> {
         if(puzzleComplete) {
-            setMessage('The puzzle has been successfully completed!')
-        } else {
-            setMessage('To start a new game select [new puzzle] below.')
+            dispatch(updateMessageBox('The puzzle has been completed!'))
         }
-    }, [puzzleComplete])
+    }, [puzzleComplete, dispatch])
 
     return (
-        <Box sx={{mt: 2, mb: 1, fontSize: 18, color: 'crimson'}}>{message}</Box>
+        <Box sx={{mt: 2, mb: 1, fontSize: 18, color: 'crimson', width: {md: '39ch'}}}
+            >{messageBox}
+        </Box>
     );
 }
 

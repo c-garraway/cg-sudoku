@@ -32,7 +32,7 @@ export function addPuzzleMask(puzzle, level) {
         let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         shuffleArray(numbers);
         let randomIndexNumbers = numbers.slice(0, maskValue);
-        console.log(randomIndexNumbers)
+        //console.log(randomIndexNumbers)
         for (let j = 0; j < randomIndexNumbers.length; j++) {
             // Push null to the randomIndexNumbers of the innerArray
             innerArray[randomIndexNumbers[j]] = null;

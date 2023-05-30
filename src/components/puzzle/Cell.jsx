@@ -2,11 +2,12 @@ import { Box } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause } from "../../features/gameData/gameDataSlice";
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
 import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
+//import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -16,12 +17,13 @@ function Cell({value, sectionValues, section, row, column}) {
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
     const puzzleComplete =  useSelector(selectPuzzleComplete)
+    const isPaused = useSelector(selectPuzzlePause)
     const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
     const [selectedFontColor, setSelectedFontColor] = useState(theme.palette.cellFont.standard)
     const [hasError, setHasError] = useState(false)
     const [canEdit, setCanEdit] = useState()
     const selectedFontWeight = canEdit ? '300' : '700'
-
+    
     const puzzleRow = section <=3 ? row : section <=6 ? row + 3 : section <=9 ? row + 6 : ''
     const puzzleColumn = (section === 1 || section === 4 || section === 7) ? column : (section === 2 || section === 5 || section === 8) ? column + 3 : (section === 3 || section === 6 || section === 9) ? column + 6 : ''
 
@@ -35,9 +37,12 @@ function Cell({value, sectionValues, section, row, column}) {
         canEdit: canEdit
     }),[puzzleRow, puzzleColumn, value, updatedValue, section, hasError, canEdit]) 
 
-    //console.log(cellInfo)
+    if(isPaused) {
+        value = null
+    }
 
     useEffect(()=> {
+        
         if(originalPuzzle[cellInfo.row][cellInfo.column] === null) {
             setCanEdit(true)
         } else {
@@ -72,10 +77,13 @@ function Cell({value, sectionValues, section, row, column}) {
         checkForErrors().then(()=> {
             if(hasError) {
                 setSelectedColor(theme.palette.cell.error)
-            }
+                /* dispatch(updateMessageBox('Oops.. check for errors')) */
+            } /* else {
+                dispatch(updateMessageBox('Looking Good...'))
+            } */
         })
 
-    },[currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues, originalPuzzle, puzzleComplete ])
+    },[dispatch, currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues, originalPuzzle, puzzleComplete ])
 
     function handleSelectedCell() {
         if(cellInfo.canEdit){
@@ -85,6 +93,7 @@ function Cell({value, sectionValues, section, row, column}) {
             dispatch(updatePuzzleStatus())
             dispatch(updateCompleteStatus())
             setHasError(false)
+            /* dispatch(updateMessageBox('Looking Good...')) */
             return
         }
         return

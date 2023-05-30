@@ -54,11 +54,11 @@ function LevelSelect() {
             <TextField
                 select
                 variant="outlined"
-                label="DIFFICULTY"
+                label="LEVEL"
                 size="small"
                 color="secondary"
                 defaultValue={0}
-                sx={{width: '150px', mt: 1, ml: 1}}
+                sx={{width: '112px', mt: 1, ml: 1}}
                 onChange={(e) => {dispatch(updateSelectedLevel(e.target.value))}}
                 >
                 {difficulties.map((option, index) => (

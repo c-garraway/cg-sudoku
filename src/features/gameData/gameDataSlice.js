@@ -28,6 +28,8 @@ const initialState = () => {
         puzzleValues: arr,
         puzzleStatus: status,
         puzzleComplete: false,
+        puzzleActive: false,
+        puzzlePause: false,
         keypadValue: 1,
         selectedCell: null,
         selectedLevel: 0
@@ -73,19 +75,30 @@ const gameDataSlice = createSlice({
         updateCompleteStatus: (state) => {
             const complete = checkComplete(state.puzzleStatus)
             state.puzzleComplete = complete
+            if(complete) {
+                state.puzzleActive = false
+            }
         },
         updateSelectedLevel: (state, action) => {
             state.selectedLevel = action.payload
+        },
+        updatePuzzleActive: (state, action) => {
+            state.puzzleActive = action.payload
+        },
+        updatePuzzlePause: (state, action) => {
+            state.puzzlePause = action.payload
         }
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel} = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, updatePuzzleActive, updatePuzzlePause} = gameDataSlice.actions;
 export const selectResolvedPuzzle = (state) => state.gameData.resolvedPuzzle;
 export const selectOriginalPuzzle = (state) => state.gameData.originalPuzzle;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
 export const selectPuzzleStatus = (state) => state.gameData.puzzleStatus;
 export const selectPuzzleComplete = (state) => state.gameData.puzzleComplete;
+export const selectPuzzleActive = (state) => state.gameData.puzzleActive;
+export const selectPuzzlePause = (state) => state.gameData.puzzlePause;
 export const selectKeypadValue = (state) => state.gameData.keypadValue;
 export const selectSelectedCell = (state) => state.gameData.selectedCell;
 export const selectSelectedLevel = (state) => state.gameData.selectedLevel;

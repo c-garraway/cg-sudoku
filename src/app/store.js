@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 
 import gameDataReducer from '../features/gameData/gameDataSlice'
 import gameMovesReducer from '../features/gameData/gameMovesSlice';
+import gameMessageReducer from '../features/gameData/gameMessageSlice';
 
 const persistConfig = {
     key: 'root',
@@ -13,7 +14,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     gameData: gameDataReducer,
-    gameMoves: gameMovesReducer
+    gameMoves: gameMovesReducer,
+    gameMessage: gameMessageReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
