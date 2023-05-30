@@ -32,7 +32,10 @@ const initialState = () => {
         puzzlePause: false,
         keypadValue: 1,
         selectedCell: null,
-        selectedLevel: 0
+        selectedLevel: null,
+        stopwatchActive: false,
+        stopwatchReset: false,
+        solveButtonSelected: false
     }
 };
 
@@ -87,11 +90,20 @@ const gameDataSlice = createSlice({
         },
         updatePuzzlePause: (state, action) => {
             state.puzzlePause = action.payload
+        },
+        updateStopwatchActive: (state, action) => {
+            state.stopwatchActive = action.payload
+        },
+        updateStopwatchReset: (state, action) => {
+            state.stopwatchReset = action.payload
+        },
+        updateSolveButtonSelected: (state, action) => {
+            state.solveButtonSelected = action.payload
         }
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, updatePuzzleActive, updatePuzzlePause} = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, updatePuzzleActive, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected} = gameDataSlice.actions;
 export const selectResolvedPuzzle = (state) => state.gameData.resolvedPuzzle;
 export const selectOriginalPuzzle = (state) => state.gameData.originalPuzzle;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
@@ -102,6 +114,9 @@ export const selectPuzzlePause = (state) => state.gameData.puzzlePause;
 export const selectKeypadValue = (state) => state.gameData.keypadValue;
 export const selectSelectedCell = (state) => state.gameData.selectedCell;
 export const selectSelectedLevel = (state) => state.gameData.selectedLevel;
+export const selectStopwatchActive = (state) => state.gameData.stopwatchActive;
+export const selectStopwatchReset = (state) => state.gameData.stopwatchReset;
+export const selectSolveButtonSelected = (state) => state.gameData.solveButtonSelected;
 export const selectSection1 = (state) => {const values = state.gameData.puzzleValues
     return [
         [values[0][0], values[0][1], values[0][2]], 

@@ -1,19 +1,24 @@
 import { Box } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
+import { selectPuzzleComplete, selectSolveButtonSelected } from "../../features/gameData/gameDataSlice";
 import { selectMessageBox, updateMessageBox } from "../../features/gameData/gameMessageSlice";
 
 function Messages() {
     const dispatch = useDispatch()
     const puzzleComplete = useSelector(selectPuzzleComplete)
     const messageBox = useSelector(selectMessageBox)
+    const solveButtonSelected = useSelector(selectSolveButtonSelected)
 
     useEffect(()=> {
         if(puzzleComplete) {
-            dispatch(updateMessageBox('The puzzle has been completed!'))
+            if(solveButtonSelected) {
+                dispatch(updateMessageBox('The puzzle has been solved for you!'))
+                return
+            }
+            dispatch(updateMessageBox('You successfully completed the puzzle!'))
         }
-    }, [puzzleComplete, dispatch])
+    }, [puzzleComplete, dispatch, solveButtonSelected])
 
     return (
         <Box sx={{mt: 2, mb: 1, fontSize: 18, color: 'crimson', width: {md: '39ch'}}}

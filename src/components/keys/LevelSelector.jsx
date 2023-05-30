@@ -41,12 +41,13 @@ export default function LevelSelect() {
 import { MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { updateSelectedLevel } from '../../features/gameData/gameDataSlice';
+import { useDispatch, useSelector } from "react-redux";
+import { selectSelectedLevel, updateSelectedLevel } from '../../features/gameData/gameDataSlice';
 
 
 function LevelSelect() {
     const dispatch = useDispatch();
+    const currentLevel = useSelector(selectSelectedLevel)
     const difficulties = ['EASY', 'MEDIUM', 'HARD']
 
     return (
@@ -56,8 +57,7 @@ function LevelSelect() {
                 variant="outlined"
                 label="LEVEL"
                 size="small"
-                color="secondary"
-                defaultValue={0}
+                defaultValue={currentLevel}
                 sx={{width: '112px', mt: 1, ml: 1}}
                 onChange={(e) => {dispatch(updateSelectedLevel(e.target.value))}}
                 >

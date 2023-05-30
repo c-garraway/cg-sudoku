@@ -1,54 +1,52 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { selectPuzzleActive, selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
-import { useSelector } from "react-redux";
+import { selectPuzzleActive, selectPuzzleComplete, selectStopwatchActive, selectStopwatchReset, updateStopwatchReset } from "../../features/gameData/gameDataSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { selectHasMoves } from "../../features/gameData/gameMovesSlice";
 
 function Stopwatch() {
+    const dispatch = useDispatch()
     const puzzleActive = useSelector(selectPuzzleActive)
     const puzzleComplete = useSelector(selectPuzzleComplete)
     const moves = useSelector(selectHasMoves)
+    const stopwatchActive = useSelector(selectStopwatchActive)
+    const stopwatchReset = useSelector(selectStopwatchReset)
     const [totalSeconds, setTotalSeconds] = useState(0)
-    const [isRunning, setIsRunning] = useState(false)
-    //const [ resetNextStart, setResetNextStart] = useState(false)
 
-    //const resetNextStart = puzzleComplete
+    
+
+/*     useEffect(()=> {
+        if(stopwatchActive && stopwatchReset) { 
+            console.log('stopwatch reset')
+            setTotalSeconds(0)
+            dispatch(updateStopwatchReset(false))
+
+        } 
+    },[stopwatchReset, dispatch, stopwatchActive]) */
 
     useEffect(()=> {
+        
         let intervalId
-        if(isRunning) {
+        if(stopwatchActive) {
             intervalId = setInterval(()=> {
                 setTotalSeconds(totalSeconds + 1)
             }, 1000)
         }
 
-        /* if(!moves && !puzzleActive && !puzzleComplete) {
+        if(stopwatchActive && stopwatchReset) { 
             setTotalSeconds(0)
-        } */
-
-        if(puzzleActive && !puzzleComplete) {
-            
-            setIsRunning(true)
-            
-        } else { setIsRunning(false) }
+            dispatch(updateStopwatchReset(false))
+        }
 
         return ()=> clearInterval(intervalId)
 
-    }, [isRunning, totalSeconds, setIsRunning, puzzleActive, puzzleComplete, moves])
+    }, [totalSeconds, puzzleActive, puzzleComplete, moves, stopwatchReset, dispatch, stopwatchActive])
 
     const hours = Math.floor(totalSeconds / 3600);
 
     const minutes = Math.floor((totalSeconds / 60) % 60);
 
     const seconds = Math.floor((totalSeconds % 60));
-
-    /* const startAndStop = () => {
-        setIsRunning(!isRunning);
-    }; */
-
-    /* const reset = () => {
-        setTotalSeconds(0);
-    }; */
 
     return( 
         <Box>

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, selectSelectedLevel, updatePuzzleActive, updatePuzzlePause } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, selectSelectedLevel, updatePuzzleActive, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetGameMoves } from "../../features/gameData/gameMovesSlice";
 import { generateSudoku } from "../../helpers/generatePuzzle";
@@ -10,6 +10,7 @@ import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
 function NewPuzzleButton({width}) {
     const dispatch = useDispatch();
     const selectedLevel = useSelector(selectSelectedLevel)
+    const levelAsString = selectedLevel === 0 ? 'easy' : selectedLevel === 1 ? 'medium' : 'hard'
 
     function handleSelect() {
         dispatch(updateSelectedCell(null))
@@ -26,12 +27,20 @@ function NewPuzzleButton({width}) {
         dispatch(updateCompleteStatus())
 
         dispatch(updatePuzzlePause(false))
-        dispatch(updateMessageBox('New game started, best of luck!'))
+        dispatch(updateMessageBox(`New ${levelAsString} level game started, best of luck!`))
+
+        //stopwatch
+        dispatch(updateStopwatchActive(true))
+        dispatch(updateStopwatchReset(true))
+
+        //Reset solveButton state
+        dispatch(updateSolveButtonSelected(false))
     }
 
     return (
         <Button 
-            sx={{display: 'flex', width: width, cursor: 'pointer', border: '1px solid black', mt: 1, color: 'black'}}
+            variant="contained"
+            sx={{display: 'flex', width: width, cursor: 'pointer', mt: 1}}
             onClick={handleSelect}
         >   New Puzzle
         </Button>

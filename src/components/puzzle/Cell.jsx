@@ -2,12 +2,11 @@ import { Box } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
 import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
-//import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -57,7 +56,7 @@ function Cell({value, sectionValues, section, row, column}) {
             }
         }
 
-        if(value === currentKeypadValue) {
+        if(value === currentKeypadValue ) {
             setSelectedColor(theme.palette.cell.selected)
         } else {
             setSelectedColor(theme.palette.cell.standard)
@@ -65,6 +64,7 @@ function Cell({value, sectionValues, section, row, column}) {
 
         if(puzzleComplete) {
             setSelectedColor(theme.palette.cell.complete)
+            dispatch(updateStopwatchActive(false))
         }
 
         if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
@@ -75,15 +75,12 @@ function Cell({value, sectionValues, section, row, column}) {
         }
 
         checkForErrors().then(()=> {
-            if(hasError) {
+            if(hasError && !isPaused) {
                 setSelectedColor(theme.palette.cell.error)
-                /* dispatch(updateMessageBox('Oops.. check for errors')) */
-            } /* else {
-                dispatch(updateMessageBox('Looking Good...'))
-            } */
+            } 
         })
 
-    },[dispatch, currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues, originalPuzzle, puzzleComplete ])
+    },[dispatch, currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues, originalPuzzle, puzzleComplete, isPaused ])
 
     function handleSelectedCell() {
         if(cellInfo.canEdit){
@@ -93,7 +90,6 @@ function Cell({value, sectionValues, section, row, column}) {
             dispatch(updatePuzzleStatus())
             dispatch(updateCompleteStatus())
             setHasError(false)
-            /* dispatch(updateMessageBox('Looking Good...')) */
             return
         }
         return

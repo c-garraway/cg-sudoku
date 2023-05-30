@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 
 
 function ControlPad() {
-    const controlButtonWith = '10ch'
+    const controlButtonWith = '9ch'
     return (
         <Box sx={{width: '100%', mt: 2}}>
             <Box sx={{display: "flex", justifyContent: 'space-between'}}>
