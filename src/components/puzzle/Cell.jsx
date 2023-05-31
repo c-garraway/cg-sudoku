@@ -1,8 +1,8 @@
-import { Box } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive, selectPuzzleActive } from "../../features/gameData/gameDataSlice";
 import { addGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
@@ -16,12 +16,14 @@ function Cell({value, sectionValues, section, row, column}) {
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
     const puzzleComplete =  useSelector(selectPuzzleComplete)
+    const puzzleActive = useSelector(selectPuzzleActive)
     const isPaused = useSelector(selectPuzzlePause)
     const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
     const [selectedFontColor, setSelectedFontColor] = useState(theme.palette.cellFont.standard)
     const [hasError, setHasError] = useState(false)
     const [canEdit, setCanEdit] = useState()
     const selectedFontWeight = canEdit ? '300' : '700'
+    const disabled = isPaused || !puzzleActive ? true : false
     
     const puzzleRow = section <=3 ? row : section <=6 ? row + 3 : section <=9 ? row + 6 : ''
     const puzzleColumn = (section === 1 || section === 4 || section === 7) ? column : (section === 2 || section === 5 || section === 8) ? column + 3 : (section === 3 || section === 6 || section === 9) ? column + 6 : ''
@@ -68,7 +70,6 @@ function Cell({value, sectionValues, section, row, column}) {
         }
 
         if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
-            //checkPuzzleComplete(puzzleValues)
             setSelectedFontColor(theme.palette.cellFont.selected)
         } else {
             setSelectedFontColor(theme.palette.cellFont.standard)
@@ -96,10 +97,11 @@ function Cell({value, sectionValues, section, row, column}) {
     }
 
     return (
-        <Box 
-            sx={{display: 'flex', alignContent: 'center', justifyContent: 'center', border: '1px solid black', width: '40px', height: '40px', alignItems: 'center', cursor: 'pointer', backgroundColor: selectedColor, color: selectedFontColor, fontWeight: selectedFontWeight }}
+        <Button 
+            disabled={disabled}
+            sx={{display: 'flex', border: '1px solid black', borderRadius: 0, minWidth: '40px', height: '40px',  backgroundColor: selectedColor, color: selectedFontColor, fontWeight: selectedFontWeight }}
             onClick={handleSelectedCell}
-        >{value}</Box>
+        >{value}</Button>
     );
 }
 

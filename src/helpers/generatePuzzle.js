@@ -4,7 +4,6 @@ export function generateSudoku() {
         sudoku[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     }
     fillSudoku(sudoku, 0, 0);
-    //console.log(sudoku)
     return sudoku;
 }
 
@@ -40,7 +39,6 @@ function shuffleArray(array) {
 function checkValue(sudoku, row, col, n) {
     for (let i = 0; i < 9; i++) {
         if (sudoku[row][i] === n || sudoku[i][col] === n) {
-            //console.log(sudoku, row, col, n)
             return false;
         }
     }

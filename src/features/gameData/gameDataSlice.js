@@ -32,9 +32,10 @@ const initialState = () => {
         puzzlePause: false,
         keypadValue: 1,
         selectedCell: null,
-        selectedLevel: null,
+        selectedLevel: 0,
         stopwatchActive: false,
         stopwatchReset: false,
+        stopwatchAtUnload: 0,
         solveButtonSelected: false
     }
 };
@@ -99,11 +100,14 @@ const gameDataSlice = createSlice({
         },
         updateSolveButtonSelected: (state, action) => {
             state.solveButtonSelected = action.payload
+        },
+        updateStopwatchAtUnload: (state, action) => {
+            state.stopwatchAtUnload = action.payload
         }
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, updatePuzzleActive, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected} = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, updatePuzzleActive, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, updateStopwatchAtUnload} = gameDataSlice.actions;
 export const selectResolvedPuzzle = (state) => state.gameData.resolvedPuzzle;
 export const selectOriginalPuzzle = (state) => state.gameData.originalPuzzle;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
@@ -116,6 +120,7 @@ export const selectSelectedCell = (state) => state.gameData.selectedCell;
 export const selectSelectedLevel = (state) => state.gameData.selectedLevel;
 export const selectStopwatchActive = (state) => state.gameData.stopwatchActive;
 export const selectStopwatchReset = (state) => state.gameData.stopwatchReset;
+export const selectStopwatchAtUnload = (state) => state.gameData.stopwatchAtUnload;
 export const selectSolveButtonSelected = (state) => state.gameData.solveButtonSelected;
 export const selectSection1 = (state) => {const values = state.gameData.puzzleValues
     return [

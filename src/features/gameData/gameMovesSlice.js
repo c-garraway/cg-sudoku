@@ -35,10 +35,8 @@ export const selectGameMoves = (state) => state.gameMoves.moves;
 export const selectHasMoves = (state) => state.gameMoves.hasMoves;
 export const selectLastGameMove = (state) => {
     const moves = state.gameMoves.moves
-    //console.log(moves)
     if(moves.length > 0) {
         const lastMove = moves.slice(-1)[0]
-        //console.log(lastMove)
         return lastMove
     } else {
         return null

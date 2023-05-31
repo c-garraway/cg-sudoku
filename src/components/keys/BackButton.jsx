@@ -4,7 +4,6 @@ import { restorePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateComple
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLastGameMove, selectHasMoves, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-//import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
 
 function BackButton({width}) {
     const dispatch = useDispatch();
@@ -19,7 +18,6 @@ function BackButton({width}) {
         if(hasMoves) {
             dispatch(restorePuzzleCell(lastGameMove))
             dispatch(deleteLastGameMove())
-            /* If(!haveErrors) */
         }
 
         dispatch(updatePuzzleStatus())
