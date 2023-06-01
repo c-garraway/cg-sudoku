@@ -25,9 +25,8 @@ function RestartButton({width}) {
         dispatch(updateCompleteStatus())
 
         dispatch(updateMessageBox('Game restarted, Better luck this time!'))
-        //stopwatch
-        dispatch(updateStopwatchReset(true))
 
+        dispatch(updateStopwatchReset(true))
     }
 
     return (
@@ -41,7 +40,6 @@ function RestartButton({width}) {
         </Button>
     );
 }
-
 
 RestartButton.propTypes = {
     width: PropTypes.string,

@@ -21,7 +21,7 @@ function Messages() {
     }, [puzzleComplete, dispatch, solveButtonSelected])
 
     return (
-        <Box sx={{mt: 2, mb: 1, fontSize: 18, color: 'crimson', width: {md: '39ch'}}}
+        <Box sx={{mt: 1, mb: 1, fontSize: 18, border: '1px solid black', p: .75, width: {md: '39ch'}, textAlign: 'center'}}
             >{messageBox}
         </Box>
     );

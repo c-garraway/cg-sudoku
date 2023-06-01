@@ -16,6 +16,7 @@ function PauseButton({width}) {
         dispatch(updatePuzzlePause(isPaused ? false : true))
         dispatch(updatePuzzleActive(isPaused ? true : false))
         dispatch(updateMessageBox(isPaused ? 'Game resumed...' : 'Game paused!'))
+        
         //stopwatch
         dispatch(updateStopwatchActive(isPaused ? true : false))
     }

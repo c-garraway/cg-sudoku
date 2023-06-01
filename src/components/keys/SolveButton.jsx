@@ -23,9 +23,9 @@ function SolveButton({width}) {
 
         dispatch(updatePuzzleStatus())
         dispatch(updateCompleteStatus())
-        //stopwatch
+
         dispatch(updateStopwatchActive(false))
-        //set solveButton state
+
         dispatch(updateSolveButtonSelected(true))
     }
 

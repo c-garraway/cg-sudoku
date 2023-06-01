@@ -17,10 +17,10 @@ function Stopwatch() {
     const [totalSeconds, setTotalSeconds] = useState(0)
 
     useEffect(()=> {
-        if(stopwatchAtUnload > 1 ) {
-            setTotalSeconds(stopwatchAtUnload)
-            if(!puzzlePause) {
-                dispatch(updateStopwatchAtUnload(0))
+        if(stopwatchAtUnload > 1 ) { //check stopwatch time was saved when page unloaded
+            setTotalSeconds(stopwatchAtUnload) //set totalSeconds to saved value
+            if(!puzzlePause) { //if user unpauses game
+                dispatch(updateStopwatchAtUnload(0)) //set saved stopwatch time to 0
             }
         }
 
@@ -36,11 +36,13 @@ function Stopwatch() {
             dispatch(updateStopwatchReset(false))
         }
 
-        const handleBeforeUnload = (event) => {
-            dispatch(updatePuzzlePause(true))
-            dispatch(updateStopwatchActive(false))
-            dispatch(updateMessageBox('Game auto-paused.'))
-            dispatch(updateStopwatchAtUnload(totalSeconds))
+        const handleBeforeUnload = (event) => { //commands to complete before page is unloaded (desktop only!)
+            if(!puzzleComplete) {
+                dispatch(updatePuzzlePause(true))
+                dispatch(updateStopwatchActive(false))
+                dispatch(updateMessageBox('Game auto-paused.'))
+                dispatch(updateStopwatchAtUnload(totalSeconds)) 
+            }
         };
 
         window.addEventListener('beforeunload', handleBeforeUnload);

@@ -1,5 +1,4 @@
 import React from "react";
-//import ControlSquare from './ControlSquare'
 import LevelSelect from "./LevelSelector";
 import PauseButton from './PauseButton'
 import BackButton from './BackButton'
@@ -10,16 +9,16 @@ import { Box } from "@mui/material";
 
 
 function ControlPad() {
-    const controlButtonWith = '9ch'
+    const controlButtonWith = '8ch'
     return (
-        <Box sx={{width: '100%', mt: 2}}>
-            <Box sx={{display: "flex", justifyContent: 'space-between'}}>
+        <Box sx={{width: '100%', mt: 3, pb: 1, borderTop: '1px solid black', borderBottom: '1px solid black'}}>
+            <Box sx={{display: "flex", justifyContent: 'space-between',}}>
                 <BackButton width={controlButtonWith}/>
                 <PauseButton width={controlButtonWith}/>
                 <RestartButton />
                 <SolveButton />
             </Box>
-            <Box sx={{display: "flex", justifyContent: 'center', mt: 1}}>
+            <Box sx={{display: "flex", justifyContent: 'space-between', mt: 1}}>
                 <NewPuzzleButton />
                 <LevelSelect />
             </Box>

@@ -6,10 +6,9 @@ export const theme = createTheme({
         type: 'light',
         primary: { main: '#1565c0' },
         secondary: { main: '#673ab7' },
+        highlightFont: { main: 'crimson'},
         cellFont: { standard: 'black', selected: 'chocolate'},
-        cell: { standard: 'white', selected: 'PowderBlue', error: 'PeachPuff', complete: 'MediumAquaMarine'},
+        cell: { standard: 'azure', selected: 'PowderBlue', error: 'PeachPuff', complete: 'MediumAquaMarine'},
         keyFont: { standard: 'black', completed: 'RoyalBlue'},
     },
 });
-
-//MediumAquaMarine

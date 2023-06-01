@@ -15,6 +15,7 @@ function BackButton({width}) {
 
     function handleSelect() {
         dispatch(updateSelectedCell(null))
+        
         if(hasMoves) {
             dispatch(restorePuzzleCell(lastGameMove))
             dispatch(deleteLastGameMove())

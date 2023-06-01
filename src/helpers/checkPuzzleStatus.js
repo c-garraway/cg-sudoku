@@ -1,3 +1,4 @@
+//check for the number of instances of each possible value (1-9) and return in object
 export function checkPuzzleStatus(array) {
     let combinedArray = []
     for(let i = 0; i < array.length; i++) {
@@ -14,6 +15,7 @@ export function checkPuzzleStatus(array) {
     return numberCounts
 }
 
+//check for puzzle completion
 export function checkComplete(object){
     if(object[null]) {
         return false;

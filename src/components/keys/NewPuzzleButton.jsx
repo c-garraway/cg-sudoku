@@ -29,18 +29,16 @@ function NewPuzzleButton({width}) {
         dispatch(updatePuzzlePause(false))
         dispatch(updateMessageBox(`New ${levelAsString} level game started, best of luck!`))
 
-        //stopwatch
         dispatch(updateStopwatchActive(true))
         dispatch(updateStopwatchReset(true))
 
-        //Reset solveButton state
         dispatch(updateSolveButtonSelected(false))
     }
 
     return (
         <Button 
             variant="contained"
-            sx={{display: 'flex', width: width, cursor: 'pointer', mt: 1}}
+            sx={{display: 'flex', width: '49%', cursor: 'pointer', mt: 1}}
             onClick={handleSelect}
         >   New Puzzle
         </Button>

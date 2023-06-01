@@ -43,12 +43,13 @@ function Cell({value, sectionValues, section, row, column}) {
     }
 
     useEffect(()=> {
-        
-        if(originalPuzzle[cellInfo.row][cellInfo.column] === null) {
+        //define editable cells (cells without initial provided value [null])
+        if(originalPuzzle[cellInfo.row][cellInfo.column] === null) { 
             setCanEdit(true)
         } else {
             setCanEdit(false)
         }
+
         async function checkForErrors() {
             const isDuplicate = checkDuplicate(puzzleValues, sectionValues, cellInfo.row, cellInfo.column, cellInfo.previousValue)
             if(isDuplicate) {
@@ -68,7 +69,8 @@ function Cell({value, sectionValues, section, row, column}) {
             setSelectedColor(theme.palette.cell.complete)
             dispatch(updateStopwatchActive(false))
         }
-
+        
+        //check if selected cell is current cell and set appropriate color
         if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
             setSelectedFontColor(theme.palette.cellFont.selected)
         } else {
@@ -99,7 +101,7 @@ function Cell({value, sectionValues, section, row, column}) {
     return (
         <Button 
             disabled={disabled}
-            sx={{display: 'flex', border: '1px solid black', borderRadius: 0, minWidth: '40px', height: '40px',  backgroundColor: selectedColor, color: selectedFontColor, fontWeight: selectedFontWeight }}
+            sx={{display: 'flex', border: '1px solid black', borderRadius: 0, minWidth: '40px', height: '40px',  backgroundColor: selectedColor, color: selectedFontColor, fontWeight: selectedFontWeight, ':hover':{backgroundColor: selectedColor}, '&.Mui-disabled': {          color: "#000000"} }}
             onClick={handleSelectedCell}
         >{value}</Button>
     );

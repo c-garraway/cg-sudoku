@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleStatus, updateKeypadValue } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleActive, selectPuzzlePause, selectPuzzleStatus, updateKeypadValue } from "../../features/gameData/gameDataSlice";
 import { theme } from "../../theme/theme";
 
 function KeySquare({value}) {
@@ -11,7 +11,10 @@ function KeySquare({value}) {
     const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
     const puzzleStatus = useSelector(selectPuzzleStatus)
     const [fontColor, setFontColor] = useState(theme.palette.keyFont.standard)
+    const puzzleActive = useSelector(selectPuzzleActive)
+    const isPaused = useSelector(selectPuzzlePause)
     const selected = value === currentKeypadValue ? true : false
+    const disabled = isPaused || !puzzleActive ? true : false
 
     useEffect(()=> {
         if(selected) {setSelectedColor(theme.palette.cell.selected)} else {setSelectedColor(theme.palette.cell.standard)}
@@ -30,7 +33,8 @@ function KeySquare({value}) {
 
     return (
         <Button 
-            sx={{display: 'flex', backgroundColor: selectedColor, fontWeight: 'bold', fontSize: 'large', border: '1px solid black', color: fontColor, mt: 1, p: 0, height: 50}}
+            disabled={disabled}
+            sx={{display: 'flex', backgroundColor: selectedColor, fontWeight: 'bold', fontSize: 'large', border: '1px solid black', color: fontColor, mt: 1, p: 0, height: 50, borderRadius: 0}}
             onClick={handleSelect}
             size="small"
             variant="contained"
