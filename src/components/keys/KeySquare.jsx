@@ -34,7 +34,7 @@ function KeySquare({value}) {
     return (
         <Button 
             disabled={disabled}
-            sx={{display: 'flex', backgroundColor: selectedColor, fontWeight: 'bold', fontSize: 'large', border: '1px solid black', color: fontColor, mt: 1, p: 0, height: 50, borderRadius: 0}}
+            sx={{display: 'flex', backgroundColor: selectedColor, fontWeight: 'bold', fontSize: 'large', border: `2px solid ${fontColor}`, color: fontColor, mt: 1, p: 0, height: 50, borderRadius: 0, '&.Mui-disabled': { border: '2px solid black'}}}
             onClick={handleSelect}
             size="small"
             variant="contained"
