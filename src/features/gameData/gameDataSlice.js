@@ -30,6 +30,7 @@ const initialState = () => {
         puzzleComplete: false,
         puzzleActive: false,
         puzzlePause: false,
+        puzzleErrors: {count: 0},
         keypadValue: 1,
         selectedCell: null,
         selectedLevel: 0,
@@ -77,10 +78,11 @@ const gameDataSlice = createSlice({
             state.puzzleStatus = status
         },
         updateCompleteStatus: (state) => {
-            const complete = checkComplete(state.puzzleStatus)
-            state.puzzleComplete = complete
-            if(complete) {
-                state.puzzleActive = false
+            if(state.puzzleErrors.count > 0) {
+                state.puzzleComplete = false
+            } else {
+                const complete = checkComplete(state.puzzleStatus)
+                state.puzzleComplete = complete
             }
         },
         updateSelectedLevel: (state, action) => {
@@ -103,11 +105,23 @@ const gameDataSlice = createSlice({
         },
         updateStopwatchAtUnload: (state, action) => {
             state.stopwatchAtUnload = action.payload
+        },
+        addPuzzleError: (state, action) => {
+            state.puzzleErrors = {...state.puzzleErrors, [action.payload.cellID]: action.payload.value, count: state.puzzleErrors.count + 1 }
+        },
+        removePuzzleError: (state, action) => {
+            const { [action.payload.cellID]: removedValue, ...updatedPuzzleErrors } = state.puzzleErrors
+            state.puzzleErrors = {...updatedPuzzleErrors, count: state.puzzleErrors.count - 1}
+        },
+        resetPuzzleErrors: (state) => {
+            state.puzzleErrors = {count: 0}
         }
+
+          
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, updatePuzzleActive, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, updateStopwatchAtUnload} = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, /* updatePuzzleActive, */ updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, updateStopwatchAtUnload, addPuzzleError, removePuzzleError, resetPuzzleErrors, } = gameDataSlice.actions;
 export const selectResolvedPuzzle = (state) => state.gameData.resolvedPuzzle;
 export const selectOriginalPuzzle = (state) => state.gameData.originalPuzzle;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
@@ -115,6 +129,7 @@ export const selectPuzzleStatus = (state) => state.gameData.puzzleStatus;
 export const selectPuzzleComplete = (state) => state.gameData.puzzleComplete;
 export const selectPuzzleActive = (state) => state.gameData.puzzleActive;
 export const selectPuzzlePause = (state) => state.gameData.puzzlePause;
+export const selectPuzzleErrors = (state) => state.gameData.puzzleErrors;
 export const selectKeypadValue = (state) => state.gameData.keypadValue;
 export const selectSelectedCell = (state) => state.gameData.selectedCell;
 export const selectSelectedLevel = (state) => state.gameData.selectedLevel;

@@ -16,6 +16,7 @@ function Messages() {
                 dispatch(updateMessageBox('The puzzle has been solved for you!'))
                 return
             }
+
             dispatch(updateMessageBox('You successfully completed the puzzle!'))
         }
     }, [puzzleComplete, dispatch, solveButtonSelected])

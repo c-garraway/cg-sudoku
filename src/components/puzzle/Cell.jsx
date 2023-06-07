@@ -2,8 +2,8 @@ import { Button } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive, selectPuzzleActive } from "../../features/gameData/gameDataSlice";
-import { addGameMove } from "../../features/gameData/gameMovesSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive, /* selectPuzzleActive, */ addPuzzleError, removePuzzleError } from "../../features/gameData/gameDataSlice";
+import { addGameMove, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
 import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
@@ -16,14 +16,19 @@ function Cell({value, sectionValues, section, row, column}) {
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
     const puzzleComplete =  useSelector(selectPuzzleComplete)
-    const puzzleActive = useSelector(selectPuzzleActive)
+    //const puzzleActive = useSelector(selectPuzzleActive)
     const isPaused = useSelector(selectPuzzlePause)
+    //const puzzleErrors = useSelector(selectPuzzleErrors)
+    const lastGameMove = useSelector(selectLastGameMove)
+
     const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
     const [selectedFontColor, setSelectedFontColor] = useState(theme.palette.cellFont.standard)
     const [hasError, setHasError] = useState(false)
+    const [errorValue, setErrorValue] = useState()
     const [canEdit, setCanEdit] = useState()
-    const selectedFontWeight = canEdit ? '300' : '700'
-    const disabled = isPaused || !puzzleActive ? true : false
+    const [cellBorder, setCellBorder] = useState('1px')
+    const selectedFontWeight = canEdit ? '700' : '300'
+    const disabled = isPaused || puzzleComplete ? true : false
     
     const puzzleRow = section <=3 ? row : section <=6 ? row + 3 : section <=9 ? row + 6 : ''
     const puzzleColumn = (section === 1 || section === 4 || section === 7) ? column : (section === 2 || section === 5 || section === 8) ? column + 3 : (section === 3 || section === 6 || section === 9) ? column + 6 : ''
@@ -35,21 +40,16 @@ function Cell({value, sectionValues, section, row, column}) {
         updatedValue: updatedValue,
         section: section,
         hasError: hasError,
+        errorValue: errorValue,
         canEdit: canEdit
-    }),[puzzleRow, puzzleColumn, value, updatedValue, section, hasError, canEdit]) 
+    }),[puzzleRow, puzzleColumn, value, updatedValue, section, hasError, errorValue, canEdit]) 
 
     if(isPaused) {
         value = null
     }
 
+    //error handling useEffect
     useEffect(()=> {
-        //define editable cells (cells without initial provided value [null])
-        if(originalPuzzle[cellInfo.row][cellInfo.column] === null) { 
-            setCanEdit(true)
-        } else {
-            setCanEdit(false)
-        }
-
         async function checkForErrors() {
             const isDuplicate = checkDuplicate(puzzleValues, sectionValues, cellInfo.row, cellInfo.column, cellInfo.previousValue)
             if(isDuplicate) {
@@ -59,31 +59,66 @@ function Cell({value, sectionValues, section, row, column}) {
             }
         }
 
+        checkForErrors().then(()=> {
+            if(hasError && !isPaused) {
+                setSelectedColor(theme.palette.cell.error)
+            } 
+        })
+    })
+
+    useEffect(() => {
+        const cellID = "".concat(cellInfo.row, cellInfo.column);
+      
+        if (cellInfo.hasError && value !== cellInfo.errorValue && value !== null) {
+          dispatch(addPuzzleError({cellID: cellID, value: value}));
+          setErrorValue(value)
+        }
+        if (!cellInfo.hasError && cellInfo.errorValue) {
+          dispatch(removePuzzleError({cellID: cellID}));
+          setErrorValue(null)
+        }
+        setTimeout(() => {
+            dispatch(updateCompleteStatus());
+        }, 150);
+
+    }, [cellInfo, dispatch, value]);
+
+    useEffect(()=> {
+        //define editable cells (cells without initial provided value [null])
+        if(originalPuzzle[cellInfo.row][cellInfo.column] === null) { 
+            setCanEdit(true)
+        } else {
+            setCanEdit(false)
+        }
+    }, [originalPuzzle, cellInfo])
+
+    //color setting useEffect
+    useEffect(()=> {
+        //set cell background color if keypad value is selected
         if(value === currentKeypadValue ) {
             setSelectedColor(theme.palette.cell.selected)
         } else {
             setSelectedColor(theme.palette.cell.standard)
         }
 
+        //set cell background color when puzzle is complete
         if(puzzleComplete) {
             setSelectedColor(theme.palette.cell.complete)
             dispatch(updateStopwatchActive(false))
         }
         
         //check if selected cell is current cell and set appropriate color
-        if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
+        //if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
+        if(lastGameMove?.column === cellInfo?.column && lastGameMove?.row === cellInfo?.row && !isPaused && !puzzleComplete) {
             setSelectedFontColor(theme.palette.cellFont.selected)
+            setCellBorder('3px')
         } else {
             setSelectedFontColor(theme.palette.cellFont.standard)
+            setCellBorder('1px')
+
         }
 
-        checkForErrors().then(()=> {
-            if(hasError && !isPaused) {
-                setSelectedColor(theme.palette.cell.error)
-            } 
-        })
-
-    },[dispatch, currentSelectedCell, cellInfo, currentKeypadValue, value, hasError, puzzleValues, sectionValues, originalPuzzle, puzzleComplete, isPaused ])
+    },[dispatch, currentSelectedCell, cellInfo, currentKeypadValue, value, puzzleComplete, lastGameMove, isPaused ])
 
     function handleSelectedCell() {
         if(cellInfo.canEdit){
@@ -91,7 +126,7 @@ function Cell({value, sectionValues, section, row, column}) {
             dispatch(updateSelectedCell(cellInfo))
             dispatch(addGameMove(cellInfo))
             dispatch(updatePuzzleStatus())
-            dispatch(updateCompleteStatus())
+            //dispatch(updateCompleteStatus())
             setHasError(false)
             return
         }
@@ -101,7 +136,7 @@ function Cell({value, sectionValues, section, row, column}) {
     return (
         <Button 
             disabled={disabled}
-            sx={{display: 'flex', border: '1px solid black', borderRadius: 0, minWidth: '41px', height: '41px',  backgroundColor: selectedColor, color: selectedFontColor, fontWeight: selectedFontWeight, ':hover':{backgroundColor: selectedColor}, '&.Mui-disabled': { color: "#000000"}}}
+            sx={{display: 'flex', border: `${cellBorder} solid ${selectedFontColor}`, borderRadius: 0, minWidth: '40px', height: '40px',  backgroundColor: selectedColor, color: selectedFontColor, fontWeight: selectedFontWeight, ':hover':{backgroundColor: selectedColor}, '&.Mui-disabled': { color: "#000000"}}}
             onClick={handleSelectedCell}
         >{value}</Button>
     );

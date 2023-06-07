@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, updateSelectedCell,  selectResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, updatePuzzleActive, selectPuzzleComplete, updateStopwatchActive, selectPuzzlePause, updateSolveButtonSelected } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, updateSelectedCell,  selectResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, /* updatePuzzleActive, */ selectPuzzleComplete, updateStopwatchActive, selectPuzzlePause, updateSolveButtonSelected, resetPuzzleErrors } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetGameMoves, selectGameMoves } from "../../features/gameData/gameMovesSlice";
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
@@ -15,11 +15,11 @@ function SolveButton({width}) {
     const disabled = puzzleComplete || totalMoves < 5 || gamePaused ? true : false
 
     function handleSelect() {
+        dispatch(resetPuzzleErrors())
         dispatch(updateSelectedCell(null))
-        
         dispatch(resetGameMoves())
         dispatch(loadPuzzleValues(resolvedPuzzle))
-        dispatch(updatePuzzleActive(false))
+        //dispatch(updatePuzzleActive(false))
 
         dispatch(updatePuzzleStatus())
         dispatch(updateCompleteStatus())

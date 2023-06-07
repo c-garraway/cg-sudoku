@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, selectSelectedLevel, updatePuzzleActive, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, selectSelectedLevel, /* updatePuzzleActive, */ updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, resetPuzzleErrors } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetGameMoves } from "../../features/gameData/gameMovesSlice";
 import { generateSudoku } from "../../helpers/generatePuzzle";
@@ -21,7 +21,7 @@ function NewPuzzleButton({width}) {
         let puzzleMaskValues = addPuzzleMask(puzzleValues, selectedLevel)
         dispatch(loadOriginalPuzzle(puzzleMaskValues))
         dispatch(loadPuzzleValues(puzzleMaskValues));
-        dispatch(updatePuzzleActive(true))
+        //dispatch(updatePuzzleActive(true))
 
         dispatch(updatePuzzleStatus())
         dispatch(updateCompleteStatus())
@@ -33,6 +33,7 @@ function NewPuzzleButton({width}) {
         dispatch(updateStopwatchReset(true))
 
         dispatch(updateSolveButtonSelected(false))
+        dispatch(resetPuzzleErrors())
     }
 
     return (
