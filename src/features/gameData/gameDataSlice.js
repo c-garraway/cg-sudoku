@@ -28,7 +28,6 @@ const initialState = () => {
         puzzleValues: arr,
         puzzleStatus: status,
         puzzleComplete: false,
-        puzzleActive: false,
         puzzlePause: false,
         puzzleErrors: {count: 0},
         keypadValue: 1,
@@ -88,9 +87,6 @@ const gameDataSlice = createSlice({
         updateSelectedLevel: (state, action) => {
             state.selectedLevel = action.payload
         },
-        updatePuzzleActive: (state, action) => {
-            state.puzzleActive = action.payload
-        },
         updatePuzzlePause: (state, action) => {
             state.puzzlePause = action.payload
         },
@@ -121,13 +117,12 @@ const gameDataSlice = createSlice({
     }
 });
 
-export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, /* updatePuzzleActive, */ updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, updateStopwatchAtUnload, addPuzzleError, removePuzzleError, resetPuzzleErrors, } = gameDataSlice.actions;
+export const {resetGameData, updateKeypadValue, updatePuzzleCell, updateSelectedCell, restorePuzzleCell, loadPuzzleValues, loadResolvedPuzzle, loadOriginalPuzzle, updatePuzzleStatus, updateCompleteStatus, updateSelectedLevel, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, updateStopwatchAtUnload, addPuzzleError, removePuzzleError, resetPuzzleErrors, } = gameDataSlice.actions;
 export const selectResolvedPuzzle = (state) => state.gameData.resolvedPuzzle;
 export const selectOriginalPuzzle = (state) => state.gameData.originalPuzzle;
 export const selectPuzzleValues = (state) => state.gameData.puzzleValues;
 export const selectPuzzleStatus = (state) => state.gameData.puzzleStatus;
 export const selectPuzzleComplete = (state) => state.gameData.puzzleComplete;
-export const selectPuzzleActive = (state) => state.gameData.puzzleActive;
 export const selectPuzzlePause = (state) => state.gameData.puzzlePause;
 export const selectPuzzleErrors = (state) => state.gameData.puzzleErrors;
 export const selectKeypadValue = (state) => state.gameData.keypadValue;

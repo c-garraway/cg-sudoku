@@ -1,13 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { selectPuzzleActive, selectPuzzleComplete, selectPuzzlePause, selectStopwatchActive, selectStopwatchAtUnload, selectStopwatchReset, updatePuzzlePause, updateStopwatchActive, updateStopwatchAtUnload, updateStopwatchReset } from "../../features/gameData/gameDataSlice";
+import { selectPuzzleComplete, selectPuzzlePause, selectStopwatchActive, selectStopwatchAtUnload, selectStopwatchReset, updatePuzzlePause, updateStopwatchActive, updateStopwatchAtUnload, updateStopwatchReset } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectHasMoves } from "../../features/gameData/gameMovesSlice";
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
 
 function Stopwatch() {
     const dispatch = useDispatch()
-    const puzzleActive = useSelector(selectPuzzleActive)
     const puzzleComplete = useSelector(selectPuzzleComplete)
     const puzzlePause = useSelector(selectPuzzlePause)
     const moves = useSelector(selectHasMoves)
@@ -52,7 +51,7 @@ function Stopwatch() {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
 
-    }, [totalSeconds, puzzleActive, puzzleComplete, moves, stopwatchReset, dispatch, stopwatchActive, stopwatchAtUnload, puzzlePause])
+    }, [totalSeconds, puzzleComplete, moves, stopwatchReset, dispatch, stopwatchActive, stopwatchAtUnload, puzzlePause])
 
     const hours = Math.floor(totalSeconds / 3600);
 

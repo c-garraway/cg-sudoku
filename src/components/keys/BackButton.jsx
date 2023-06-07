@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { restorePuzzleCell, updateSelectedCell, updatePuzzleStatus, /* updateCompleteStatus, */ selectPuzzlePause, selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
+import { restorePuzzleCell, updateSelectedCell, updatePuzzleStatus, selectPuzzlePause, selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteLastGameMove, selectHasMoves, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -22,7 +22,6 @@ function BackButton({width}) {
         }
 
         dispatch(updatePuzzleStatus())
-        //dispatch(updateCompleteStatus())
     }
 
     return (

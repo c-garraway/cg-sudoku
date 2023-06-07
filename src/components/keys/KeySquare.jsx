@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, /* selectPuzzleActive, */ selectPuzzleComplete, selectPuzzleErrors, selectPuzzlePause, selectPuzzleStatus, updateKeypadValue } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleComplete, selectPuzzleErrors, selectPuzzlePause, selectPuzzleStatus, updateKeypadValue } from "../../features/gameData/gameDataSlice";
 import { theme } from "../../theme/theme";
 
 function KeySquare({value}) {
@@ -13,7 +13,6 @@ function KeySquare({value}) {
     const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
     const puzzleStatus = useSelector(selectPuzzleStatus)
     const [fontColor, setFontColor] = useState(theme.palette.keyFont.standard)
-    //const puzzleActive = useSelector(selectPuzzleActive)
     const isPaused = useSelector(selectPuzzlePause)
     const selected = value === currentKeypadValue ? true : false
     const disabled = isPaused || puzzleComplete ? true : false

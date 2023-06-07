@@ -43,7 +43,7 @@ function App() {
                     >CG Sudoku</Typography>
                     <MoveCounter />
                 </Box>
-                <Box sx={{display: 'flex', /* justifyContent: 'space-between', */ flexDirection: {xs:'column', md: 'row'}}}>
+                <Box sx={{display: 'flex', flexDirection: {xs:'column', md: 'row'}}}>
                     <Puzzle />
                     <Box sx={{ml: {md: 2}}}>
                         <Messages />

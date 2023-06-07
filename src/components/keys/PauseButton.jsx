@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { selectPuzzlePause, /* updatePuzzleActive, */ updatePuzzlePause, selectPuzzleComplete, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
+import { selectPuzzlePause, updatePuzzlePause, selectPuzzleComplete, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -14,7 +14,6 @@ function PauseButton({width}) {
 
     function handleSelect() {
         dispatch(updatePuzzlePause(isPaused ? false : true))
-        //dispatch(updatePuzzleActive(isPaused ? true : false))
         dispatch(updateMessageBox(isPaused ? 'Game resumed...' : 'Game paused!'))
         
         //stopwatch

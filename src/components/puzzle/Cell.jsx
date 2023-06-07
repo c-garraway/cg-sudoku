@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive, /* selectPuzzleActive, */ addPuzzleError, removePuzzleError } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive,  addPuzzleError, removePuzzleError } from "../../features/gameData/gameDataSlice";
 import { addGameMove, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
@@ -16,9 +16,7 @@ function Cell({value, sectionValues, section, row, column}) {
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
     const puzzleComplete =  useSelector(selectPuzzleComplete)
-    //const puzzleActive = useSelector(selectPuzzleActive)
     const isPaused = useSelector(selectPuzzlePause)
-    //const puzzleErrors = useSelector(selectPuzzleErrors)
     const lastGameMove = useSelector(selectLastGameMove)
 
     const [selectedColor, setSelectedColor] = useState(theme.palette.cell.standard)
@@ -27,6 +25,7 @@ function Cell({value, sectionValues, section, row, column}) {
     const [errorValue, setErrorValue] = useState()
     const [canEdit, setCanEdit] = useState()
     const [cellBorder, setCellBorder] = useState('1px')
+
     const selectedFontWeight = canEdit ? '700' : '300'
     const disabled = isPaused || puzzleComplete ? true : false
     
@@ -48,7 +47,7 @@ function Cell({value, sectionValues, section, row, column}) {
         value = null
     }
 
-    //error handling useEffect
+    //game play error handling useEffect
     useEffect(()=> {
         async function checkForErrors() {
             const isDuplicate = checkDuplicate(puzzleValues, sectionValues, cellInfo.row, cellInfo.column, cellInfo.previousValue)
@@ -108,7 +107,6 @@ function Cell({value, sectionValues, section, row, column}) {
         }
         
         //check if selected cell is current cell and set appropriate color
-        //if(currentSelectedCell?.column === cellInfo?.column && currentSelectedCell?.row === cellInfo?.row) {
         if(lastGameMove?.column === cellInfo?.column && lastGameMove?.row === cellInfo?.row && !isPaused && !puzzleComplete) {
             setSelectedFontColor(theme.palette.cellFont.selected)
             setCellBorder('3px')
@@ -126,7 +124,6 @@ function Cell({value, sectionValues, section, row, column}) {
             dispatch(updateSelectedCell(cellInfo))
             dispatch(addGameMove(cellInfo))
             dispatch(updatePuzzleStatus())
-            //dispatch(updateCompleteStatus())
             setHasError(false)
             return
         }
