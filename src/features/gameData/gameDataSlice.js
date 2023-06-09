@@ -77,7 +77,7 @@ const gameDataSlice = createSlice({
             state.puzzleStatus = status
         },
         updateCompleteStatus: (state) => {
-            if(state.puzzleErrors.count > 0) {
+            if(state.puzzleErrors?.count > 0) {
                 state.puzzleComplete = false
             } else {
                 const complete = checkComplete(state.puzzleStatus)
@@ -103,14 +103,14 @@ const gameDataSlice = createSlice({
             state.stopwatchAtUnload = action.payload
         },
         addPuzzleError: (state, action) => {
-            state.puzzleErrors = {...state.puzzleErrors, [action.payload.cellID]: action.payload.value, count: state.puzzleErrors.count + 1 }
+            state.puzzleErrors = {...state.puzzleErrors, [action.payload.cellID]: action.payload.value, count: state.puzzleErrors?.count + 1 }
         },
         removePuzzleError: (state, action) => {
             const { [action.payload.cellID]: removedValue, ...updatedPuzzleErrors } = state.puzzleErrors
-            state.puzzleErrors = {...updatedPuzzleErrors, count: state.puzzleErrors.count - 1}
+            state.puzzleErrors = {...updatedPuzzleErrors, count: state.puzzleErrors?.count > 0 ? state.puzzleErrors?.count - 1 : 0}
         },
         resetPuzzleErrors: (state) => {
-            state.puzzleErrors = {count: 0}
+                state.puzzleErrors = {count: 0}
         }
 
           

@@ -38,7 +38,7 @@ function NewPuzzleButton({width}) {
     return (
         <Button 
             variant="contained"
-            sx={{display: 'flex', width: '49%', cursor: 'pointer', mt: 1}}
+            sx={{display: 'flex', width: '49%', cursor: 'pointer', mt: 1, borderRadius: 0}}
             onClick={handleSelect}
         >   New Puzzle
         </Button>

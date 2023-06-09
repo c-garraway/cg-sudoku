@@ -15,7 +15,7 @@ function LevelSelect() {
             label="LEVEL"
             size="small"
             defaultValue={currentLevel}
-            sx={{width: '49%', mt: 1, }}
+            sx={{width: '49%', mt: 1,'& fieldset': {borderRadius: 0} }}
             onChange={(e) => {dispatch(updateSelectedLevel(e.target.value))}}
             >
             {difficulties.map((option, index) => (

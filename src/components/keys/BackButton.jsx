@@ -28,7 +28,7 @@ function BackButton({width}) {
         <Button 
             disabled = {disabled}
             variant="contained"
-            sx={{display: 'flex', width: width, cursor: 'pointer', mt: 1}}
+            sx={{display: 'flex', width: width, cursor: 'pointer', mt: 1, borderRadius: 0}}
             onClick={handleSelect}
             ><ArrowBackIosNewIcon fontSize="small"/>
         </Button>

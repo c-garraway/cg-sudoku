@@ -34,7 +34,7 @@ function RestartButton({width}) {
             disabled={disabled}
             variant="contained"
             startIcon={<RestartAltIcon/>}
-            sx={{display: 'flex', width: width, cursor: 'pointer', mt: 1, }}
+            sx={{display: 'flex', width: width, cursor: 'pointer', mt: 1, borderRadius: 0 }}
             onClick={handleSelect}
             >restart
         </Button>
