@@ -4,6 +4,7 @@ import { selectPuzzleComplete, selectPuzzlePause, selectStopwatchActive, selectS
 import { useDispatch, useSelector } from "react-redux";
 import { selectHasMoves } from "../../features/gameData/gameMovesSlice";
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
+import { updateLastCompletionTime } from "../../features/gameData/gameScoresSlice";
 
 function Stopwatch() {
     const dispatch = useDispatch()
@@ -59,11 +60,18 @@ function Stopwatch() {
 
     const seconds = Math.floor((totalSeconds % 60));
 
+    const timerValue = hours + ':' + minutes.toString().padStart(2, "0") + ':' + seconds.toString().padStart(2, "0")
+
+    useEffect(()=> {
+        if(puzzleComplete && totalSeconds !== 0) {
+            dispatch(updateLastCompletionTime([totalSeconds, timerValue]))
+        }
+    },[dispatch, puzzleComplete, timerValue, totalSeconds ])
+
     return( 
         <Box>
             <Typography>Stopwatch</Typography>
-            <Typography >{hours}:{minutes.toString().padStart(2, "0")}:
-        {seconds.toString().padStart(2, "0")}</Typography>
+            <Typography > {timerValue}</Typography>
         </Box>
     );
 }

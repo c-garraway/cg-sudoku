@@ -11,7 +11,7 @@ import { Box } from "@mui/material";
 function ControlPad() {
     const controlButtonWith = '8ch'
     return (
-        <Box sx={{width: '100%', mt: 3, pb: 1, borderTop: '1px solid black', borderBottom: '1px solid black'}}>
+        <Box sx={{width: '100%', mt: 2, pb: 1, borderTop: '1px solid black', borderBottom: {sm:'1px solid black'}}}>
             <Box sx={{display: "flex", justifyContent: 'space-between',}}>
                 <BackButton width={controlButtonWith}/>
                 <PauseButton width={controlButtonWith}/>

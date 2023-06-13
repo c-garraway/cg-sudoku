@@ -6,6 +6,7 @@ import { resetGameMoves } from "../../features/gameData/gameMovesSlice";
 import { generateSudoku } from "../../helpers/generatePuzzle";
 import { addPuzzleMask } from "../../helpers/addPuzzleMask";
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
+import { updateScoreUpdated } from "../../features/gameData/gameScoresSlice";
 
 function NewPuzzleButton({width}) {
     const dispatch = useDispatch();
@@ -33,6 +34,8 @@ function NewPuzzleButton({width}) {
 
         dispatch(updateSolveButtonSelected(false))
         dispatch(resetPuzzleErrors())
+
+        dispatch(updateScoreUpdated(false))
     }
 
     return (
