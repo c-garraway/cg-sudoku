@@ -5,6 +5,7 @@ import ControlPad from './components/keys/ControlPad';
 import Messages from './components/messages/Messages';
 import Timer from './components/stopwatch/Stopwatch';
 import MoveCounter from './components/moveCounter/MoveCounter';
+import Scores from './components/scores/Scores';
 import { Box, ThemeProvider, Typography } from '@mui/material';
 import { theme } from './theme/theme'
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,11 +45,15 @@ function App() {
                     <MoveCounter />
                 </Box>
                 <Box sx={{display: 'flex', flexDirection: {xs:'column', md: 'row'}}}>
-                    <Puzzle />
+                    <Box>
+                        <Puzzle />
+                    </Box>
+                    
                     <Box sx={{ml: {md: 2}}}>
                         <Messages />
                         <KeyPad />
                         <ControlPad />
+                        <Scores />
                     </Box>
                 </Box>
             </Box>

@@ -4,9 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = () => {
     return {
-        hard: [],
-        medium: [],
-        easy: []
+        hard: {completionTime: '23:00', date: 0, time: 0 },
+        medium: {completionTime: '23:00', date: 0, time: 0 },
+        easy: {completionTime: '23:00', date: 0, time: 0 },
     }
 };
 
@@ -31,5 +31,6 @@ export const {resetGameScores, updateHardScore, updateMediumScore, updateEasySco
 export const selectHardScore = (state) => state.gameScores.hard;
 export const selectMediumScore = (state) => state.gameScores.medium;
 export const selectEasyScore = (state) => state.gameScores.easy;
+export const selectGameScores = (state) => state.gameScores;
 
 export default gameScoresSlice.reducer;
