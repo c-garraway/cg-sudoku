@@ -44,7 +44,7 @@ function App() {
                     >CG Sudoku</Typography>
                     <MoveCounter />
                 </Box>
-                <Box>
+                <Box sx={{width: {xs: '100%', sm: 'fit-content'}}}>
                     <Scores />
                 </Box>
                 <Box sx={{display: 'flex', flexDirection: {xs:'column', md: 'row'}}}>

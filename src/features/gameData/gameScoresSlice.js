@@ -8,7 +8,8 @@ const initialState = () => {
         medium: {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'},
         easy: {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'},
         lastCompletionTime: [0, '0'],
-        scoreUpdated: false
+        scoreUpdated: false,
+        scoresExpanded: false
     }
 };
 
@@ -41,15 +42,19 @@ const gameScoresSlice = createSlice({
         },
         updateScoreUpdated: (state, action) => {
             state.scoreUpdated = action.payload
+        },
+        updateScoresExpanded: (state, action) => {
+            state.scoresExpanded = action.payload
         }
     }
 });
 
-export const {resetGameScores, updateHardScore, updateMediumScore, updateEasyScore, updateLastCompletionTime, updateScoreUpdated} = gameScoresSlice.actions;
+export const {resetGameScores, updateHardScore, updateMediumScore, updateEasyScore, updateLastCompletionTime, updateScoreUpdated, updateScoresExpanded} = gameScoresSlice.actions;
 export const selectHardScore = (state) => state.gameScores.hard;
 export const selectMediumScore = (state) => state.gameScores.medium;
 export const selectEasyScore = (state) => state.gameScores.easy;
-export const selectLastCompletionTime= (state) => state.gameScores.lastCompletionTime;
-export const selectScoreUpdated= (state) => state.gameScores.scoreUpdated;
+export const selectLastCompletionTime = (state) => state.gameScores.lastCompletionTime;
+export const selectScoreUpdated = (state) => state.gameScores.scoreUpdated;
+export const selectScoresExpanded = (state) => state.gameScores.scoresExpanded
 
 export default gameScoresSlice.reducer;

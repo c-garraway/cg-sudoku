@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetGameScores, selectEasyScore, selectHardScore, selectLastCompletionTime, selectMediumScore, selectScoreUpdated, updateEasyScore, updateHardScore, updateMediumScore } from "../../features/gameData/gameScoresSlice";
+import { resetGameScores, selectEasyScore, selectHardScore, selectLastCompletionTime, selectMediumScore, selectScoreUpdated, selectScoresExpanded, updateEasyScore, updateHardScore, updateMediumScore, updateScoresExpanded } from "../../features/gameData/gameScoresSlice";
 import { Box, Button, Collapse, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { selectPuzzleComplete, selectSelectedLevel, selectSolveButtonSelected } from "../../features/gameData/gameDataSlice";
+import { selectPuzzleComplete, selectSelectedLevel, selectSolveButtonSelected, updatePuzzlePause, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
+import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
 
 function Scores() {
     const dispatch = useDispatch()
@@ -17,14 +18,15 @@ function Scores() {
     const lastCompletionTime = useSelector(selectLastCompletionTime)
     const lastPuzzleLevel = useSelector(selectSelectedLevel)
     const scoreUpdated = useSelector(selectScoreUpdated)
+    const scoresExpanded = useSelector(selectScoresExpanded)
 
     const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric' };
     const localDateTime = new Date().toLocaleString('en-CA', options)
 
-    const [expanded, setExpanded] = React.useState(false);
+    //const [expanded, setExpanded] = React.useState(false);
 
     useEffect(()=> {
-        setTimeout(() => {
+        //setTimeout(() => {
             if(puzzleComplete && !solveButtonSelected && !scoreUpdated) {
                 //easy level
                 if(lastPuzzleLevel === 0) {
@@ -51,12 +53,18 @@ function Scores() {
                     return
                 }
             }
-        }, 150);
+       // }, 150);
         
-    }, [puzzleComplete, scoreUpdated, lastCompletionTime, solveButtonSelected, easyScore, mediumScore, hardScore, lastPuzzleLevel, localDateTime, dispatch])
+    }/* , [puzzleComplete, scoreUpdated, lastCompletionTime, solveButtonSelected, easyScore, mediumScore, hardScore, lastPuzzleLevel, localDateTime, dispatch] */)
     
     const handleExpandClick = () => {
-        setExpanded((prev) => !prev);
+        //setExpanded((prev) => !prev);
+        dispatch(updateScoresExpanded(!scoresExpanded))
+        if(!puzzleComplete) {
+            dispatch(updatePuzzlePause(scoresExpanded ? false : true))
+            dispatch(updateMessageBox(scoresExpanded ? 'Game resumed...' : 'Game paused, Best Times Opened'))
+            dispatch(updateStopwatchActive(scoresExpanded ? true : false))
+        }
     };
 
     const handleResetClick = () => {
@@ -64,11 +72,11 @@ function Scores() {
     };
 
     return (
-        <Box sx={{width: '100%'}}>
-            <Button onClick={handleExpandClick} sx={{width: '100%',margin: 'auto 0'}} endIcon={expanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>} size="small">BEST TIMES</Button>
-            <Collapse in={expanded}>
-                <TableContainer sx={{mb: 1,}}>
-                    <Table size='small' aria-label="simple table">
+        <Box /* sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'space-between'}} */ >
+            <Button onClick={handleExpandClick} sx={{width: '100%',margin: 'auto 0'}} endIcon={scoresExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>} size="small">BEST TIMES</Button>
+            <Collapse in={scoresExpanded}>
+                <TableContainer /* sx={{mb: 1, }} */>
+                    <Table size='small' aria-label="simple table" sx={{border: '1px solid black'}}>
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">LEVEL</TableCell>

@@ -70,7 +70,7 @@ function Stopwatch() {
 
     return( 
         <Box>
-            <Typography>Stopwatch</Typography>
+            <Typography>Time</Typography>
             <Typography > {timerValue}</Typography>
         </Box>
     );

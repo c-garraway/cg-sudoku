@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
+import { selectScoresExpanded, updateScoresExpanded } from "../../features/gameData/gameScoresSlice";
 
 function PauseButton({width}) {
     const dispatch = useDispatch();
     const isPaused = useSelector(selectPuzzlePause)
     const puzzleComplete = useSelector(selectPuzzleComplete)
+    const scoresExpanded = useSelector(selectScoresExpanded)
     const disabled = puzzleComplete ? true : false
 
     function handleSelect() {
@@ -18,6 +20,8 @@ function PauseButton({width}) {
         
         //stopwatch
         dispatch(updateStopwatchActive(isPaused ? true : false))
+
+        dispatch(updateScoresExpanded(isPaused && scoresExpanded ? false : ''))
     }
 
     return (

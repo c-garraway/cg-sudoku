@@ -9,8 +9,8 @@ function MoveCounter() {
 
     return (
         <Box>
-            <Typography>Blank Cells</Typography>
-            <Typography align="right">{remainingCount}</Typography>
+            <Typography>Remaining</Typography>
+            <Typography align="right">{remainingCount} {remainingCount !== 1 ? 'Cells' : 'Cell '}</Typography>
         </Box>
     );
 }
