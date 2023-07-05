@@ -1,19 +1,23 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, selectSelectedLevel, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, resetPuzzleErrors } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, updateSelectedCell, loadOriginalPuzzle, loadResolvedPuzzle, updatePuzzleStatus, /* updateCompleteStatus,  */selectSelectedLevel, updatePuzzlePause, updateStopwatchActive, updateStopwatchReset, updateSolveButtonSelected, resetPuzzleErrors, updatePuzzleComplete, updatePuzzleFilled } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetGameMoves } from "../../features/gameData/gameMovesSlice";
 import { generateSudoku } from "../../helpers/generatePuzzle";
 import { addPuzzleMask } from "../../helpers/addPuzzleMask";
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
-import { updateScoreUpdated } from "../../features/gameData/gameScoresSlice";
+import { selectScoresExpanded, updateScoreUpdated, updateScoresExpanded } from "../../features/gameData/gameScoresSlice";
 
 function NewPuzzleButton({width}) {
     const dispatch = useDispatch();
     const selectedLevel = useSelector(selectSelectedLevel)
+    const scoresExpanded = useSelector(selectScoresExpanded)
     const levelAsString = selectedLevel === 0 ? 'easy' : selectedLevel === 1 ? 'medium' : 'hard'
 
     function handleSelect() {
+        dispatch(updatePuzzleFilled(false))
+        dispatch(updatePuzzleComplete(false))
+
         dispatch(updateSelectedCell(null))
 
         dispatch(resetGameMoves())
@@ -24,7 +28,6 @@ function NewPuzzleButton({width}) {
         dispatch(loadPuzzleValues(puzzleMaskValues));
 
         dispatch(updatePuzzleStatus())
-        dispatch(updateCompleteStatus())
 
         dispatch(updatePuzzlePause(false))
         dispatch(updateMessageBox(`New ${levelAsString} level game started, best of luck!`))
@@ -36,6 +39,9 @@ function NewPuzzleButton({width}) {
         dispatch(resetPuzzleErrors())
 
         dispatch(updateScoreUpdated(false))
+
+        dispatch(updateScoresExpanded(scoresExpanded ? false : false))
+
     }
 
     return (

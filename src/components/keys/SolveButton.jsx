@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, updateSelectedCell,  selectResolvedPuzzle, updatePuzzleStatus, updateCompleteStatus, selectPuzzleComplete, selectPuzzlePause, updateSolveButtonSelected, resetPuzzleErrors, updateStopwatchReset } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, updateSelectedCell,  selectResolvedPuzzle, updatePuzzleStatus, /* updateCompleteStatus, */ selectPuzzleComplete, selectPuzzlePause, updateSolveButtonSelected, resetPuzzleErrors, updateStopwatchReset, updatePuzzleComplete } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetGameMoves, selectGameMoves } from "../../features/gameData/gameMovesSlice";
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
@@ -22,7 +22,7 @@ function SolveButton({width}) {
         dispatch(loadPuzzleValues(resolvedPuzzle))
 
         dispatch(updatePuzzleStatus())
-        dispatch(updateCompleteStatus())
+        dispatch(updatePuzzleComplete(true))
 
         dispatch(resetPuzzleErrors())
         

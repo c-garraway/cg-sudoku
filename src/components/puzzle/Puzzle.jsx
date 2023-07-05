@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Section from "./Section";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import { selectSection1, selectSection2, selectSection3, selectSection4, selectSection5, selectSection6, selectSection7, selectSection8, selectSection9 } from "../../features/gameData/gameDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPuzzleErrors, selectPuzzleFilled, selectPuzzleStatus, selectSection1, selectSection2, selectSection3, selectSection4, selectSection5, selectSection6, selectSection7, selectSection8, selectSection9, updatePuzzleComplete, updatePuzzleFilled } from "../../features/gameData/gameDataSlice";
+import { checkPuzzleFilled } from "../../helpers/checkPuzzleStatus";
 
 function Puzzle() {
     const valuesSection1 = useSelector(selectSection1)
@@ -14,6 +15,20 @@ function Puzzle() {
     const valuesSection7 = useSelector(selectSection7)
     const valuesSection8 = useSelector(selectSection8)
     const valuesSection9 = useSelector(selectSection9)
+
+    const dispatch = useDispatch()
+    const puzzleStatus = useSelector(selectPuzzleStatus)
+    const puzzleErrors = useSelector(selectPuzzleErrors)
+    const puzzleFilled = useSelector(selectPuzzleFilled)
+
+    useEffect(()=> {
+        dispatch(updatePuzzleFilled(checkPuzzleFilled(puzzleStatus)))
+
+            if(puzzleErrors.count === 0 && puzzleFilled) {
+                dispatch(updatePuzzleComplete(true))
+            }
+
+    }, [dispatch, puzzleErrors, puzzleFilled, puzzleStatus ])
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', border: '2px solid black', width: 'fit-content', mt: {xs: 0, sm: 1}}}>

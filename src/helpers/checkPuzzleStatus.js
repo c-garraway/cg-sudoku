@@ -16,9 +16,16 @@ export function checkPuzzleStatus(array) {
 }
 
 //check for puzzle completion
-export function checkComplete(object){
-    if(object[null]) {
-        return false;
+export function checkPuzzleFilled(object){
+    let status = true
+
+    for(let x in object) {
+
+        if(object[x] !== 9) {
+            status = status === true ? false : status
+        } 
     }
-    return true;
+    
+    return status;
+
 }

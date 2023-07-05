@@ -2,11 +2,12 @@ import { Button } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, updateCompleteStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive,  addPuzzleError, removePuzzleError } from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, /* updateCompleteStatus,  */selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive,  addPuzzleError, removePuzzleError, /* selectPuzzleStatus, updatePuzzleFilled,  *//* selectPuzzleErrors, selectPuzzleFilled, updatePuzzleComplete  */} from "../../features/gameData/gameDataSlice";
 import { addGameMove, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
 import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
+//import { checkPuzzleFilled } from "../../helpers/checkPuzzleStatus";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -16,6 +17,9 @@ function Cell({value, sectionValues, section, row, column}) {
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
     const puzzleComplete =  useSelector(selectPuzzleComplete)
+    //const puzzleStatus = useSelector(selectPuzzleStatus)
+    //const puzzleErrors = useSelector(selectPuzzleErrors)
+    //const puzzleFilled = useSelector(selectPuzzleFilled)
     const isPaused = useSelector(selectPuzzlePause)
     const lastGameMove = useSelector(selectLastGameMove)
 
@@ -65,22 +69,35 @@ function Cell({value, sectionValues, section, row, column}) {
         })
     })
 
+    // add/remove error & check if puzzle grid is filled
     useEffect(() => {
         const cellID = "".concat(cellInfo.row, cellInfo.column);
       
         if (cellInfo.hasError && value !== cellInfo.errorValue && value !== null) {
-          dispatch(addPuzzleError({cellID: cellID, value: value}));
-          setErrorValue(value)
+            dispatch(addPuzzleError({cellID: cellID, value: value}));
+            setErrorValue(value)
+            }
+            if (!cellInfo.hasError && cellInfo.errorValue) {
+            dispatch(removePuzzleError({cellID: cellID}));
+            setErrorValue(null)
         }
-        if (!cellInfo.hasError && cellInfo.errorValue) {
-          dispatch(removePuzzleError({cellID: cellID}));
-          setErrorValue(null)
-        }
-        setTimeout(() => {
-            dispatch(updateCompleteStatus());
-        }, 150);
+    
+        //dispatch(updatePuzzleFilled(checkPuzzleFilled(puzzleStatus)))
 
-    }, [cellInfo, dispatch, value]);
+    }, [cellInfo, dispatch, value, /* puzzleStatus,  *//* puzzleErrors, puzzleFilled */]);
+
+    //check if puzzle has been successfully completed
+    /* useEffect(()=> {
+        setTimeout(() => {
+            
+        }, 250);
+
+        if(puzzleErrors.count === 0 && puzzleFilled) {
+            dispatch(updatePuzzleComplete(true))
+
+        }
+
+    }, [dispatch, puzzleErrors, puzzleFilled]) */
 
     useEffect(()=> {
         //define editable cells (cells without initial provided value [null])
@@ -118,6 +135,7 @@ function Cell({value, sectionValues, section, row, column}) {
 
     },[dispatch, currentSelectedCell, cellInfo, currentKeypadValue, value, puzzleComplete, lastGameMove, isPaused ])
 
+
     function handleSelectedCell() {
         if(cellInfo.canEdit){
             dispatch(updatePuzzleCell(cellInfo))
@@ -125,6 +143,7 @@ function Cell({value, sectionValues, section, row, column}) {
             dispatch(addGameMove(cellInfo))
             dispatch(updatePuzzleStatus())
             setHasError(false)
+
             return
         }
         return

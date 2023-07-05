@@ -26,7 +26,7 @@ function Scores() {
     //const [expanded, setExpanded] = React.useState(false);
 
     useEffect(()=> {
-        //setTimeout(() => {
+        setTimeout(() => {
             if(puzzleComplete && !solveButtonSelected && !scoreUpdated) {
                 //easy level
                 if(lastPuzzleLevel === 0) {
@@ -53,9 +53,26 @@ function Scores() {
                     return
                 }
             }
-       // }, 150);
+        }, 200);
         
-    }/* , [puzzleComplete, scoreUpdated, lastCompletionTime, solveButtonSelected, easyScore, mediumScore, hardScore, lastPuzzleLevel, localDateTime, dispatch] */)
+        /* REFACTORING REQUIRED!
+        if (puzzleComplete && !solveButtonSelected && !scoreUpdated) {
+            const levelNames = ['easy', 'medium', 'hard'];
+            const levelScore = [easyScore, mediumScore, hardScore];
+            const updateScore = [updateEasyScore, updateMediumScore, updateHardScore];
+
+            if (lastPuzzleLevel >= 0 && lastPuzzleLevel <= 2) {
+                const currentLevel = levelNames[lastPuzzleLevel];
+                const currentScore = levelScore[lastPuzzleLevel];
+                const currentUpdateScore = updateScore[lastPuzzleLevel];
+
+                if (currentScore?.completionTime[0] === 0 || currentScore?.completionTime[0] > lastCompletionTime[0]) {
+                    dispatch(currentUpdateScore({ completionTime: lastCompletionTime, date: localDateTime }));
+                }
+            }
+        }
+        */
+    })
     
     const handleExpandClick = () => {
         //setExpanded((prev) => !prev);
@@ -86,9 +103,9 @@ function Scores() {
                         </TableHead>
                         <TableBody>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell align="left" component="th" scope="row">Hard</TableCell>
-                                <TableCell align="left">{hardScore?.completionTime[1]}</TableCell>
-                                <TableCell align="left">{hardScore.date}</TableCell>
+                                <TableCell align="left" component="th" scope="row">Easy</TableCell>
+                                <TableCell align="left">{easyScore?.completionTime[1]}</TableCell>
+                                <TableCell align="left">{easyScore.date}</TableCell>
                             </TableRow>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell align="left" component="th" scope="row">Medium</TableCell>
@@ -96,9 +113,9 @@ function Scores() {
                                 <TableCell align="left">{mediumScore.date}</TableCell>
                             </TableRow>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell align="left" component="th" scope="row">Easy</TableCell>
-                                <TableCell align="left">{easyScore?.completionTime[1]}</TableCell>
-                                <TableCell align="left">{easyScore.date}</TableCell>
+                                <TableCell align="left" component="th" scope="row">Hard</TableCell>
+                                <TableCell align="left">{hardScore?.completionTime[1]}</TableCell>
+                                <TableCell align="left">{hardScore.date}</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

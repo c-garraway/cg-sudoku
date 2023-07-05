@@ -21,7 +21,7 @@ function PauseButton({width}) {
         //stopwatch
         dispatch(updateStopwatchActive(isPaused ? true : false))
 
-        dispatch(updateScoresExpanded(isPaused && scoresExpanded ? false : ''))
+        dispatch(updateScoresExpanded(isPaused && scoresExpanded ? false : false))
     }
 
     return (
