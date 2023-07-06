@@ -15,7 +15,7 @@ export function checkPuzzleStatus(array) {
     return numberCounts
 }
 
-//check for puzzle completion
+//check puzzle filled with 9 items per key
 export function checkPuzzleFilled(object){
     let status = true
 

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import PropTypes from 'prop-types'
-import { loadPuzzleValues, updateSelectedCell,  updatePuzzleStatus, /* updateCompleteStatus, */ selectPuzzleComplete, selectOriginalPuzzle, updateStopwatchReset, selectPuzzlePause, /* updatePuzzleComplete */ } from "../../features/gameData/gameDataSlice";
+import { loadPuzzleValues, updateSelectedCell,  updatePuzzleStatus, selectPuzzleComplete, selectOriginalPuzzle, updateStopwatchReset, selectPuzzlePause } from "../../features/gameData/gameDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { resetGameMoves, selectGameMoves } from "../../features/gameData/gameMovesSlice";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -22,7 +22,6 @@ function RestartButton({width}) {
         dispatch(loadPuzzleValues(originalPuzzle))
 
         dispatch(updatePuzzleStatus())
-        //dispatch(updatePuzzleComplete(false))
 
         dispatch(updateMessageBox('Game restarted, Better luck this time!'))
 

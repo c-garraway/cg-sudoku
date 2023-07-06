@@ -24,7 +24,7 @@ function Puzzle() {
     useEffect(()=> {
         dispatch(updatePuzzleFilled(checkPuzzleFilled(puzzleStatus)))
 
-            if(puzzleErrors.count === 0 && puzzleFilled) {
+            if(puzzleErrors?.count === 0 && puzzleFilled) {
                 dispatch(updatePuzzleComplete(true))
             }
 

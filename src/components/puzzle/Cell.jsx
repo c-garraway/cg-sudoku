@@ -2,12 +2,11 @@ import { Button } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
-import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, /* updateCompleteStatus,  */selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive,  addPuzzleError, removePuzzleError, /* selectPuzzleStatus, updatePuzzleFilled,  *//* selectPuzzleErrors, selectPuzzleFilled, updatePuzzleComplete  */} from "../../features/gameData/gameDataSlice";
+import { selectKeypadValue, selectPuzzleValues, selectSelectedCell, updatePuzzleCell, updateSelectedCell, updatePuzzleStatus, selectOriginalPuzzle, selectPuzzlePause, updateStopwatchActive,  addPuzzleError, removePuzzleError} from "../../features/gameData/gameDataSlice";
 import { addGameMove, selectLastGameMove } from "../../features/gameData/gameMovesSlice";
 import { checkDuplicate } from "../../helpers/checkDuplicateErrors";
 import { theme } from "../../theme/theme";
 import { selectPuzzleComplete } from "../../features/gameData/gameDataSlice";
-//import { checkPuzzleFilled } from "../../helpers/checkPuzzleStatus";
 
 function Cell({value, sectionValues, section, row, column}) {
     const dispatch = useDispatch();
@@ -17,9 +16,6 @@ function Cell({value, sectionValues, section, row, column}) {
     const updatedValue = useSelector(selectKeypadValue)
     const originalPuzzle = useSelector(selectOriginalPuzzle)
     const puzzleComplete =  useSelector(selectPuzzleComplete)
-    //const puzzleStatus = useSelector(selectPuzzleStatus)
-    //const puzzleErrors = useSelector(selectPuzzleErrors)
-    //const puzzleFilled = useSelector(selectPuzzleFilled)
     const isPaused = useSelector(selectPuzzlePause)
     const lastGameMove = useSelector(selectLastGameMove)
 
@@ -82,22 +78,7 @@ function Cell({value, sectionValues, section, row, column}) {
             setErrorValue(null)
         }
     
-        //dispatch(updatePuzzleFilled(checkPuzzleFilled(puzzleStatus)))
-
     }, [cellInfo, dispatch, value, /* puzzleStatus,  *//* puzzleErrors, puzzleFilled */]);
-
-    //check if puzzle has been successfully completed
-    /* useEffect(()=> {
-        setTimeout(() => {
-            
-        }, 250);
-
-        if(puzzleErrors.count === 0 && puzzleFilled) {
-            dispatch(updatePuzzleComplete(true))
-
-        }
-
-    }, [dispatch, puzzleErrors, puzzleFilled]) */
 
     useEffect(()=> {
         //define editable cells (cells without initial provided value [null])

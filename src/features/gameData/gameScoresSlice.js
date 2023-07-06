@@ -22,7 +22,6 @@ const gameScoresSlice = createSlice({
             state.medium = {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'}
             state.easy = {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'}
         },
-        /* resetGameScores: () => initialState(), */
         updateHardScore: (state, action) => {
             state.hard = action.payload
             state.scoreUpdated = true

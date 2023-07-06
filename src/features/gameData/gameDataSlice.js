@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { checkPuzzleStatus, /* checkComplete  */} from "../../helpers/checkPuzzleStatus";
+import { checkPuzzleStatus} from "../../helpers/checkPuzzleStatus";
 
 let arr = new Array(9);
 for (let i = 0; i < arr.length; i++) {
@@ -77,14 +77,6 @@ const gameDataSlice = createSlice({
             const status = checkPuzzleStatus(state.puzzleValues)
             state.puzzleStatus = status
         },
-        /* updateCompleteStatus: (state) => {
-            if(state.puzzleErrors?.count > 0) {
-                state.puzzleComplete = false
-            } else {
-                const complete = checkComplete(state.puzzleStatus)
-                state.puzzleComplete = complete
-            }
-        }, */
         updatePuzzleComplete: (state, action) => {
             state.puzzleComplete = action.payload
         },
@@ -119,8 +111,6 @@ const gameDataSlice = createSlice({
         resetPuzzleErrors: (state) => {
                 state.puzzleErrors = {count: 0}
         }
-
-          
     }
 });
 
