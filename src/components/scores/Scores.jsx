@@ -30,6 +30,7 @@ function Scores() {
                 if(lastPuzzleLevel === 0) {
                     if(easyScore?.completionTime[0] === 0 || easyScore?.completionTime[0] > lastCompletionTime[0]) {
                         dispatch(updateEasyScore({completionTime: lastCompletionTime, date: localDateTime}))
+                        dispatch(updateMessageBox(`New best time! [EASY] ${lastCompletionTime[1]}`))
                     }
                     return
                 }
@@ -37,6 +38,7 @@ function Scores() {
                 if(lastPuzzleLevel === 1) {
                     if(mediumScore?.completionTime[0] === 0 || mediumScore?.completionTime[0] > lastCompletionTime[0]) {
                         dispatch(updateMediumScore({completionTime: lastCompletionTime, date: localDateTime}))
+                        dispatch(updateMessageBox(`New best time! [MEDIUM] ${lastCompletionTime[1]}`))
                     }
                     return
                 }
@@ -44,6 +46,7 @@ function Scores() {
                 if(lastPuzzleLevel === 2) {
                     if(hardScore?.completionTime[0] === 0 || hardScore?.completionTime[0] > lastCompletionTime[0]) {
                         dispatch(updateHardScore({completionTime: lastCompletionTime, date: localDateTime}))
+                        dispatch(updateMessageBox(`New best time! [HARD] ${lastCompletionTime[1]}`))
                     }
                     return
                 }
@@ -75,22 +78,22 @@ function Scores() {
                             <TableRow>
                                 <TableCell align="left">LEVEL</TableCell>
                                 <TableCell align="left">TIME</TableCell>
-                                <TableCell align="left">DATE</TableCell>
+                                <TableCell align="left">DATE / TIME</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell align="left" component="th" scope="row">Easy</TableCell>
+                                <TableCell align="left" component="th" scope="row">EASY</TableCell>
                                 <TableCell align="left">{easyScore?.completionTime[1]}</TableCell>
                                 <TableCell align="left">{easyScore.date}</TableCell>
                             </TableRow>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell align="left" component="th" scope="row">Medium</TableCell>
+                                <TableCell align="left" component="th" scope="row">MEDIUM</TableCell>
                                 <TableCell align="left">{mediumScore?.completionTime[1]}</TableCell>
                                 <TableCell align="left">{mediumScore.date}</TableCell>
                             </TableRow>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell align="left" component="th" scope="row">Hard</TableCell>
+                                <TableCell align="left" component="th" scope="row">HARD</TableCell>
                                 <TableCell align="left">{hardScore?.completionTime[1]}</TableCell>
                                 <TableCell align="left">{hardScore.date}</TableCell>
                             </TableRow>

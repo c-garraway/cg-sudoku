@@ -30,7 +30,7 @@ function NewPuzzleButton({width}) {
         dispatch(updatePuzzleStatus())
 
         dispatch(updatePuzzlePause(false))
-        dispatch(updateMessageBox(`New ${levelAsString} level game started, best of luck!`))
+        dispatch(updateMessageBox(`New game started [${levelAsString}], best of luck!`))
 
         dispatch(updateStopwatchActive(true))
         dispatch(updateStopwatchReset(true))
