@@ -6,6 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { selectPuzzleComplete, selectSelectedLevel, selectSolveButtonSelected, updatePuzzlePause, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
+import { updateModalForComponent, updateModalOpen } from "../../features/confirmationData/confirmationDataSlice";
 
 function Scores() {
     const dispatch = useDispatch()
@@ -65,7 +66,9 @@ function Scores() {
     };
 
     const handleResetClick = () => {
-        dispatch(resetGameScores())
+        dispatch(updateModalOpen(true))
+        dispatch(updateModalForComponent('Reset Best Times'))
+        //dispatch(resetGameScores())
     };
 
     return (

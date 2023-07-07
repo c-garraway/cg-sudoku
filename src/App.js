@@ -6,11 +6,13 @@ import Messages from './components/messages/Messages';
 import Timer from './components/stopwatch/Stopwatch';
 import MoveCounter from './components/moveCounter/MoveCounter';
 import Scores from './components/scores/Scores';
+import ConfirmationModal from './components/confirmation/ConfirmationModal';
 import { Box, ThemeProvider, Typography } from '@mui/material';
 import { theme } from './theme/theme'
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPuzzleComplete, updatePuzzlePause, updateStopwatchActive } from './features/gameData/gameDataSlice';
 import { updateMessageBox } from './features/gameData/gameMessageSlice';
+
 
 function App() {
     const dispatch = useDispatch()
@@ -58,6 +60,7 @@ function App() {
                         <ControlPad />
                     </Box>
                 </Box>
+                <ConfirmationModal />
             </Box>
         </ThemeProvider>
     );

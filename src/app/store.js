@@ -6,7 +6,8 @@ import thunk from 'redux-thunk';
 import gameDataReducer from '../features/gameData/gameDataSlice'
 import gameMovesReducer from '../features/gameData/gameMovesSlice';
 import gameMessageReducer from '../features/gameData/gameMessageSlice';
-import gameScoresReducer from '../features/gameData/gameScoresSlice'
+import gameScoresReducer from '../features/gameData/gameScoresSlice';
+import confirmationReducer from '../features/confirmationData/confirmationDataSlice'
 
 const persistConfig = {
     key: 'root',
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     gameMoves: gameMovesReducer,
     gameMessage: gameMessageReducer,
     gameScores: gameScoresReducer,
+    confirmationModal: confirmationReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
