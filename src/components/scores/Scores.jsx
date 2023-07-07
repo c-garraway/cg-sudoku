@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { selectPuzzleComplete, selectSelectedLevel, selectSolveButtonSelected, updatePuzzlePause, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
-import { updateModalForComponent, updateModalOpen } from "../../features/confirmationData/confirmationDataSlice";
+import { selectModalForComponent, selectModalResponse, updateModalForComponent, updateModalOpen, updateModalResponse } from "../../features/confirmationData/confirmationDataSlice";
 
 function Scores() {
     const dispatch = useDispatch()
@@ -20,6 +20,9 @@ function Scores() {
     const lastPuzzleLevel = useSelector(selectSelectedLevel)
     const scoreUpdated = useSelector(selectScoreUpdated)
     const scoresExpanded = useSelector(selectScoresExpanded)
+
+    const forComponent = useSelector(selectModalForComponent)
+    const modalResponse = useSelector(selectModalResponse)
 
     const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric' };
     const localDateTime = new Date().toLocaleString('en-CA', options)
@@ -54,9 +57,18 @@ function Scores() {
             }
         }, 200);
     })
+
+    //Rest scores
+    useEffect(()=> {
+        if(forComponent[1] === 1 && modalResponse) {
+            console.log(forComponent[1])
+            dispatch(resetGameScores())
+            dispatch(updateModalResponse(false))
+            dispatch(updateModalForComponent(['', 0]))
+        }
+    })
     
     const handleExpandClick = () => {
-        //setExpanded((prev) => !prev);
         dispatch(updateScoresExpanded(!scoresExpanded))
         if(!puzzleComplete) {
             dispatch(updatePuzzlePause(scoresExpanded ? false : true))
@@ -67,8 +79,7 @@ function Scores() {
 
     const handleResetClick = () => {
         dispatch(updateModalOpen(true))
-        dispatch(updateModalForComponent('Reset Best Times'))
-        //dispatch(resetGameScores())
+        dispatch(updateModalForComponent(['Reset Best Times', 1]))
     };
 
     return (

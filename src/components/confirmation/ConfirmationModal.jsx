@@ -13,11 +13,11 @@ const style = {
   top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 200,
+  width: 250,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 function ConfirmationModal() {
@@ -27,16 +27,12 @@ function ConfirmationModal() {
 
     const handleClose = () => {
         dispatch(updateModalOpen(false))
-        dispatch(updateModalForComponent('none'))
-    }
-
-    const handleYes = () => {
-        dispatch(updateModalResponse(true))
-        dispatch(updateModalOpen(false))
-    }
-
-    const handleNo = () => {
         dispatch(updateModalResponse(false))
+        dispatch(updateModalForComponent(['', 0]))
+    }
+
+    const handleConfirm = () => {
+        dispatch(updateModalResponse(true))
         dispatch(updateModalOpen(false))
     }
 
@@ -57,12 +53,15 @@ function ConfirmationModal() {
             >
             <Fade in={openModal}>
                 <Box sx={style}>
-                    <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+                    <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'/* , border: '1px solid black' */}}>
                         <Typography id="transition-modal-title" variant="h6" component="h2" marginBottom={1}>
-                        {forComponent}?
+                        {forComponent[0]}?
                         </Typography>
-                        <Button variant="contained" onClick={handleYes} >YES</Button>
-                        <Button variant="contained" onClick={handleNo} sx={{ml: 1}}>NO</Button>
+                        <Box paddingBottom={1}>
+                            <Button variant="contained" onClick={handleConfirm} >CONFIRM</Button>
+                            <Button variant="contained" onClick={handleClose} sx={{ml: 2}}>CANCEL</Button>
+                        </Box>
+                        
                     </Box>
                 </Box>
             </Fade>

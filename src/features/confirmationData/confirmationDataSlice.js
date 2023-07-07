@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = () => {
     return {
         modalOpen: false,
-        modalForComponent: 'none',
+        modalForComponent: ['', 0],
         modalResponse: false
     }
 };
