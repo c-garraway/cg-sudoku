@@ -84,10 +84,10 @@ function Scores() {
 
     return (
         <Box >
-            <Button onClick={handleExpandClick} sx={{width: '100%',margin: 'auto 0'}} endIcon={scoresExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>} size="small">BEST TIMES</Button>
+            <Button onClick={handleExpandClick} /* sx={{width: {xs: '100%', md: '376px'},margin: 'auto 0'}} */ endIcon={scoresExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>} size="small">MY BEST TIMES</Button>
             <Collapse in={scoresExpanded}>
                 <TableContainer /* sx={{mb: 1, }} */>
-                    <Table size='small' aria-label="simple table" sx={{border: '1px solid black'}}>
+                    <Table size='small' aria-label="simple table" sx={{border: '1px solid black', width: {xs: '100%', md: '376px'}}}>
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">LEVEL</TableCell>
@@ -114,7 +114,7 @@ function Scores() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Button onClick={handleResetClick} sx={{width: '100%',margin: 'auto 0'}} size="small">RESET BEST TIMES</Button>
+                <Button onClick={handleResetClick} sx={{/* width: '100%' *//* ,margin: 'auto 0' */}} size="small">RESET MY BEST TIMES</Button>
             </Collapse>
         </Box>
     );

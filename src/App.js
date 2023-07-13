@@ -6,6 +6,7 @@ import Messages from './components/messages/Messages';
 import Timer from './components/stopwatch/Stopwatch';
 import MoveCounter from './components/moveCounter/MoveCounter';
 import Scores from './components/scores/Scores';
+import Notes from './components/appNotes/Notes'
 import ConfirmationModal from './components/confirmation/ConfirmationModal';
 import { Box, ThemeProvider, Typography } from '@mui/material';
 import { theme } from './theme/theme'
@@ -46,20 +47,29 @@ function App() {
                     >CG Sudoku</Typography>
                     <MoveCounter />
                 </Box>
-                <Box sx={{width: {xs: '100%', sm: 'fit-content'}}}>
-                    <Scores />
+                <Box sx={{display: 'flex', justifyContent: 'space-between', flexDirection: {xs:'column', md: 'row'}, width: '100%'}}>
+                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+                        <Scores />
+                    </Box>
+                    <Box sx={{ width: ' 100%', ml: {sm: 2}}}>
+                        <Notes />
+                    </Box>
                 </Box>
-                <Box sx={{display: 'flex', flexDirection: {xs:'column', md: 'row'}}}>
-                    <Box>
+                <Box sx={{display: 'flex', justifyContent: 'space-between',flexDirection: {xs:'column', md: 'row'}, /* width: '100%', */ /* border: '1px solid red' */}}>
+                    <Box sx={{mr: {sm: 1}}}>
                         <Puzzle />
                     </Box>
-                    
-                    <Box sx={{ml: {md: 2}}}>
+                    <Box sx={{display: {sm: 'none', width: '100%'}}}>
+                        <Scores />
+                    </Box>
+                    <Box  sx={{ml: {sm: 1}}}>
                         <Messages />
                         <KeyPad />
                         <ControlPad />
                     </Box>
+                    
                 </Box>
+                
                 <ConfirmationModal />
             </Box>
         </ThemeProvider>
