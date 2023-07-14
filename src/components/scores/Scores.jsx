@@ -7,6 +7,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { selectPuzzleComplete, selectSelectedLevel, selectSolveButtonSelected, updatePuzzlePause, updateStopwatchActive } from "../../features/gameData/gameDataSlice";
 import { updateMessageBox } from "../../features/gameData/gameMessageSlice";
 import { selectModalForComponent, selectModalResponse, updateModalForComponent, updateModalOpen, updateModalResponse } from "../../features/confirmationData/confirmationDataSlice";
+import { updateShareModalMessage, updateShareModalOpen } from "../../features/gameData/shareDataSlice";
 
 function Scores() {
     const dispatch = useDispatch()
@@ -34,7 +35,9 @@ function Scores() {
                 if(lastPuzzleLevel === 0) {
                     if(easyScore?.completionTime[0] === 0 || easyScore?.completionTime[0] > lastCompletionTime[0]) {
                         dispatch(updateEasyScore({completionTime: lastCompletionTime, date: localDateTime}))
-                        dispatch(updateMessageBox(`New best time! [EASY] ${lastCompletionTime[1]}`))
+                        dispatch(updateShareModalMessage(`[ EASY ] ${lastCompletionTime[1]}`))
+                        dispatch(updateShareModalOpen(true))
+
                     }
                     return
                 }
@@ -42,7 +45,9 @@ function Scores() {
                 if(lastPuzzleLevel === 1) {
                     if(mediumScore?.completionTime[0] === 0 || mediumScore?.completionTime[0] > lastCompletionTime[0]) {
                         dispatch(updateMediumScore({completionTime: lastCompletionTime, date: localDateTime}))
-                        dispatch(updateMessageBox(`New best time! [MEDIUM] ${lastCompletionTime[1]}`))
+                        dispatch(updateShareModalMessage(`[ MEDIUM ] ${lastCompletionTime[1]}`))
+                        dispatch(updateShareModalOpen(true))
+
                     }
                     return
                 }
@@ -50,7 +55,9 @@ function Scores() {
                 if(lastPuzzleLevel === 2) {
                     if(hardScore?.completionTime[0] === 0 || hardScore?.completionTime[0] > lastCompletionTime[0]) {
                         dispatch(updateHardScore({completionTime: lastCompletionTime, date: localDateTime}))
-                        dispatch(updateMessageBox(`New best time! [HARD] ${lastCompletionTime[1]}`))
+                        dispatch(updateShareModalMessage(`[ HARD ] ${lastCompletionTime[1]}`))
+                        dispatch(updateShareModalOpen(true))
+
                     }
                     return
                 }
@@ -82,6 +89,23 @@ function Scores() {
         dispatch(updateModalForComponent(['Reset Best Times', 1]))
     };
 
+    async function handleShare() {
+        if ( navigator.canShare ) {
+            try {
+                await navigator.share({
+                text: `My Best Times in CG SUDOKU:
+                [ EASY ] - ${easyScore?.completionTime[1]}
+                [ MEDIUM ] - ${mediumScore?.completionTime[1]} 
+                [ HARD ] - ${hardScore?.completionTime[1]}  `,
+                });
+            } catch (error) {
+                console.error('There was an error sharing score:', error);
+            }
+        } else {
+            alert('Your system does not support sharing.');
+        }
+    }
+
     return (
         <Box >
             <Button onClick={handleExpandClick} /* sx={{width: {xs: '100%', md: '376px'},margin: 'auto 0'}} */ endIcon={scoresExpanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>} size="small">MY BEST TIMES</Button>
@@ -98,23 +122,39 @@ function Scores() {
                         <TableBody>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell align="left" component="th" scope="row">EASY</TableCell>
-                                <TableCell align="left">{easyScore?.completionTime[1]}</TableCell>
-                                <TableCell align="left">{easyScore.date}</TableCell>
+                                <TableCell align="left">
+                                    {easyScore?.completionTime[1]} 
+                                </TableCell>
+                                <TableCell align="left">
+                                    {easyScore.date}
+                                </TableCell>
                             </TableRow>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell align="left" component="th" scope="row">MEDIUM</TableCell>
-                                <TableCell align="left">{mediumScore?.completionTime[1]}</TableCell>
-                                <TableCell align="left">{mediumScore.date}</TableCell>
+                                <TableCell align="left">
+                                    {mediumScore?.completionTime[1]} 
+                                </TableCell>
+                                <TableCell align="left">
+                                    {mediumScore.date}
+                                </TableCell>
                             </TableRow>
                             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell align="left" component="th" scope="row">HARD</TableCell>
-                                <TableCell align="left">{hardScore?.completionTime[1]}</TableCell>
-                                <TableCell align="left">{hardScore.date}</TableCell>
+                                <TableCell align="left">
+                                    {hardScore?.completionTime[1]} 
+                                </TableCell>
+                                <TableCell align="left">
+                                    {hardScore.date}
+                                </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Button onClick={handleResetClick} sx={{/* width: '100%' *//* ,margin: 'auto 0' */}} size="small">RESET MY BEST TIMES</Button>
+                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Button onClick={handleResetClick} size="small">RESET MY BEST TIMES</Button>
+                    <Button onClick={handleShare} size="small">SHARE MY BEST TIMES</Button>
+                </Box>
+                
             </Collapse>
         </Box>
     );

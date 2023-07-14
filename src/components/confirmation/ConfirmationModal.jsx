@@ -59,7 +59,7 @@ function ConfirmationModal() {
                         </Typography>
                         <Box paddingBottom={1}>
                             <Button variant="contained" onClick={handleConfirm} >CONFIRM</Button>
-                            <Button variant="contained" onClick={handleClose} sx={{ml: 2}}>CANCEL</Button>
+                            <Button variant="contained" onClick={handleClose} sx={{ml: 3}}>CANCEL</Button>
                         </Box>
                         
                     </Box>

@@ -8,6 +8,7 @@ import MoveCounter from './components/moveCounter/MoveCounter';
 import Scores from './components/scores/Scores';
 import Notes from './components/appNotes/Notes'
 import ConfirmationModal from './components/confirmation/ConfirmationModal';
+import ShareModal from './components/sharing/ShareModal';
 import { Box, ThemeProvider, Typography } from '@mui/material';
 import { theme } from './theme/theme'
 import { useDispatch, useSelector } from 'react-redux';
@@ -71,6 +72,7 @@ function App() {
                 </Box>
                 
                 <ConfirmationModal />
+                <ShareModal />
             </Box>
         </ThemeProvider>
     );

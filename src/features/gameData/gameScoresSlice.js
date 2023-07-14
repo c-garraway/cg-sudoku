@@ -4,9 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = () => {
     return {
-        hard: {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'},
-        medium: {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'},
-        easy: {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'},
+        hard: {completionTime: [0, '---'], date: '---'},
+        medium: {completionTime: [0, '---'], date: '---'},
+        easy: {completionTime: [0, '---'], date: '---'},
         lastCompletionTime: [0, '0'],
         scoreUpdated: false,
         scoresExpanded: false
@@ -18,9 +18,9 @@ const gameScoresSlice = createSlice({
     initialState: initialState(),
     reducers: {
         resetGameScores: (state) => {
-            state.hard = {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'}
-            state.medium = {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'}
-            state.easy = {completionTime: [0, '0:00:00'], date: '0000-00-00, 00:00 p.m.'}
+            state.hard = {completionTime: [0, '---'], date: '---'}
+            state.medium = {completionTime: [0, '---'], date: '---'}
+            state.easy = {completionTime: [0, '---'], date: '---'}
         },
         updateHardScore: (state, action) => {
             state.hard = action.payload

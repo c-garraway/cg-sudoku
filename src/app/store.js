@@ -7,7 +7,8 @@ import gameDataReducer from '../features/gameData/gameDataSlice'
 import gameMovesReducer from '../features/gameData/gameMovesSlice';
 import gameMessageReducer from '../features/gameData/gameMessageSlice';
 import gameScoresReducer from '../features/gameData/gameScoresSlice';
-import confirmationReducer from '../features/confirmationData/confirmationDataSlice'
+import confirmationReducer from '../features/confirmationData/confirmationDataSlice';
+import shareReducer from '../features/gameData/shareDataSlice'
 
 const persistConfig = {
     key: 'root',
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     gameMoves: gameMovesReducer,
     gameMessage: gameMessageReducer,
     gameScores: gameScoresReducer,
-    confirmationModal: confirmationReducer
+    confirmationModal: confirmationReducer,
+    shareModal: shareReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
