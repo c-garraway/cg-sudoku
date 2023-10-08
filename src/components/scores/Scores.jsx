@@ -96,7 +96,9 @@ function Scores() {
                 text: `My Best Times in CG SUDOKU:
                 [ EASY ] - ${easyScore?.completionTime[1]}
                 [ MEDIUM ] - ${mediumScore?.completionTime[1]} 
-                [ HARD ] - ${hardScore?.completionTime[1]}  `,
+                [ HARD ] - ${hardScore?.completionTime[1]}`,
+                //url: window.location.protocol + '//' + window.location.hostname,
+
                 });
             } catch (error) {
                 console.error('There was an error sharing score:', error);

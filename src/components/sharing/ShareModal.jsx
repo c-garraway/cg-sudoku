@@ -36,6 +36,7 @@ function ShareModal() {
         if ( navigator.canShare ) {
             try {
                 await navigator.share({
+                url: window.location.protocol + '//' + window.location.hostname,
                 text: `My New Best Time in CG SUDOKU: ${modalMessage}`,
                 });
             } catch (error) {
